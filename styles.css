@@ -1,0 +1,141 @@
+body {
+    font-family: 'Roboto';
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.navBar {
+    background-color: rgb(185, 189, 189);
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 35px;
+    /* margin-top: 1%;
+    margin-bottom: 1%; */
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+    height: 5%;
+    width: 60%;
+    /* min-width: 750px; */
+}
+
+.navBar a {
+    /* color: #70000b; */
+    padding-left: 5px;
+    padding-right: 5px;
+    text-decoration: none;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 3%;
+    margin-right: 3%;
+    border-radius: 8px;
+}
+
+.navBar a:hover {
+    background-color: rgb(199, 199, 199);
+    color: white;
+}
+
+.postList {
+    display: flex;
+    flex-direction: column;
+    /* Center it based on page width */
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 90%;
+    width: 60%;
+    /* min-width: 750px; */
+    padding: 2%;
+}
+
+.postList .row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row .thumbnail {
+    width: 60%;
+    padding: 2%;
+}
+
+/* Used to retain alignment
+on rows without three posts */
+.thumbnail .blank {
+    background-color: white;
+    color: white;
+}
+
+.thumbnail .body {
+    background-color: rgba(221, 224, 224, 0.785);
+    transition: background-color 0.5s;
+    border-radius: 8px;
+    font-size: x-large;
+    text-align: left;
+    padding: 3%;
+}
+
+.thumbnail .body:hover {
+    background-color: rgb(199, 199, 199);
+}
+
+.thumbnail .body:focus,
+.thumbnail .body:active {
+    transition: none;
+}
+
+.thumbnail .publishDate {
+    font-style: italic;
+    font-size: large;
+}
+
+.thumbnail .snippet {
+    font-size: medium;
+}
+
+.post {
+    height: 90%;
+    width: 60%;
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.post .title {
+    font-size: xxx-large;
+}
+
+.post .publishDate {
+    font-style: italic;
+    font-size: xx-large;
+}
+
+.post .body {
+    margin: 5%;
+    text-indent: 8%;
+    font-size: x-large;
+}
+
+.post figure {
+    text-indent: 0;
+    text-align: center;
+    font-size: large;
+}
+
+.darkModeButton {
+    background-color: gray;
+    
+}
+
+.lightModeButton {
+    background-color: azure;
+}

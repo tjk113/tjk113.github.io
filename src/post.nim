@@ -21,11 +21,7 @@ proc get_title_and_desc(text: string): (string, string) =
     discard text.find(re("=\"(.*)\""), title_and_desc)
     return (title_and_desc[0], title_and_desc[1])
 
-proc parse_markdown(text: string): string =
-    var parser = create_markdown_parser(text)
-    return parser.parse()
-
-proc create_post*(id: int): Option[Post] =
+proc create_post*(id: int, dont_parse_markdown = false): Option[Post] =
     var post = Post(id: id)
     var post_exists = false
 
@@ -35,17 +31,18 @@ proc create_post*(id: int): Option[Post] =
             let id = parseInt(path.substr(4).split('_')[0])
             if id == post.id:
                 let text = readFile(path)
-                # The body starts after the first blank line
+                # The body starts after the '-' line
                 let split = text.split(re("-[\\s]*"), 1)
                 if split.len < 2:
                     raise Defect.newException("Couldn't find the '-' delimiter while parsing \"" & path & "\"")
                 post.body = split[1]
-                # # Parse the Markdown right away
-                # post.body = 
+                if not dont_parse_markdown:
+                    var parser = create_markdown_parser(post.body)
+                    post.body = parser.parse()
+
                 let title_and_desc = get_title_and_desc(text)
                 post.title = title_and_desc[0]
                 post.desc = title_and_desc[1]
-                # echo &"{post.title}, {post.desc}"
                 post.filename = splitFile(path).name
                 post_exists = true
                 break

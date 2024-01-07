@@ -24,9 +24,9 @@ proc generate_post_html(post: Post, publish_date: string): string =
         <div class="publishDate">""" & publish_date & """</div>
         <div class="body">
 """
-    # Split lines into paragraphs
+    # Proper indentation
     for line in post.body.splitLines():
-        post_html.add("            <p>" & line & "</p>\n")
+        post_html.add("            " & line & '\n')
     # Gotta make sure that raw HTML
     # no one's reading is pretty :D
     post_html.removeSuffix('\n')
@@ -51,7 +51,7 @@ proc generate_homepage_html(publish_date: string): string =
     var homepage_html = HEADER & "    <div class=\"postList\">\n        <div class=\"row\">\n"
     var num_thumbnails = closest_multiple_to_n(3, get_num_posts())
     for i in 1..num_thumbnails:
-        let post = create_post(i)
+        let post = create_post(i, true)
         if post.isSome:
             homepage_html.add(generate_thumbnail_html(post.get(), publish_date))
         # Properly align last row even if
@@ -85,12 +85,14 @@ proc generate_homepage_html(publish_date: string): string =
 
 proc help() =
     echo """Commands:
+h               - display this help menu
 a <post_number> - add a post
 r <post_number> - remove a post
 u <post_number> - update a post
 p               - publish changes
-h               - display this help menu
-q               - quit"""
+q               - quit
+q!              - quit without confirmation
+pq              - publish changes and quit"""
 
 proc main() =
     var made_changes = false
@@ -99,11 +101,14 @@ proc main() =
     while true:
         write(stdout, "> ")
         var input: seq[string] = readLine(stdin).split()
-        let publish_date = now().format("M/dd/yyyy")
+        # Meridiem will be uppercase by default
+        let meridiem = now().format("tt").toLower()
+        let publish_date = now().format("M/dd/yyyy h:mm") & meridiem
         case input[0]:
             of "h": help()
             of "q":
-                if not published and made_changes:
+                # Support "q!" command
+                if not published and made_changes and input.len == 1:
                     write(stdout, "You have unpublished changes. Are you sure you want to exit? [y/n] ")
                     if readLine(stdin)[0] == 'n':
                         continue
@@ -120,7 +125,7 @@ proc main() =
                 made_changes = true
             of "u":
                 made_changes = true
-            of "p":
+            of "p", "pq":
                 if not made_changes:
                     echo "Nothing new to publish!"
                     continue
@@ -133,6 +138,9 @@ proc main() =
                     file.write(generate_post_html(post, publish_date))
                     file.close()
                 published = true
+                # Support "pq" command
+                if input[0] == "pq":
+                    break
 
 when isMainModule:
     main()

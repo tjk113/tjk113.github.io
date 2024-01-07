@@ -19,7 +19,7 @@ proc get_num_posts(): int =
     return toSeq(walkDir("raw/", relative=true)).len
 
 proc generate_post_html(post: Post, publish_date: string): string =
-    var post_html = HEADER.replace("styles.css", "../styles.css") & """    <div class="post">
+    var post_html = HEADER.replace("href=\"", "href=\"../") & """    <div class="post">
         <div class="title">""" & post.title & """</div>
         <div class="publishDate">""" & publish_date & """</div>
         <div class="body">

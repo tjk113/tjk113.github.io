@@ -9,6 +9,8 @@ import strutils
 # '# ..'         - Heading
 # '## ..'        - Heading2
 # '### ..'       - Heading3
+# '1. ...'       - Numbered List
+# '- ...'        - Bulleted List
 
 type
     MarkdownParser* = object

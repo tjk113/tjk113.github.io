@@ -5,6 +5,7 @@
 
 body {
     font-family: 'Fixedsys Excelsior';
+    /* font-weight: bold; */
     justify-content: center;
     text-align: center;
     display: flex;
@@ -125,7 +126,7 @@ on rows without three posts */
 .post .body {
     margin: 5%;
     text-indent: 8%;
-    font-size: x-large;
+    font-size: 24px;
 }
 
 .post .body h1, .post .body h2, .post .body h3 {
@@ -136,6 +137,19 @@ on rows without three posts */
     text-indent: 0;
     text-align: center;
     font-size: large;
+}
+
+.backButton {
+    font-size: 20px;
+    width: 60%;
+    padding-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.backButton:onhover {
+    background-color: red;
 }
 
 .darkModeButton {

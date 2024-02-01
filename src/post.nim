@@ -21,7 +21,7 @@ proc get_title_and_desc(text: string): (string, string) =
     discard text.find(re("=\"(.*)\""), title_and_desc)
     return (title_and_desc[0], title_and_desc[1])
 
-proc create_post*(id: int, dont_parse_markdown = false): Option[Post] =
+proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool = false): Option[Post] =
     var post = Post(id: id)
     var post_exists = false
 
@@ -48,7 +48,10 @@ proc create_post*(id: int, dont_parse_markdown = false): Option[Post] =
                 break
 
     if not post_exists:
-        return none(Post)
+        if not can_be_none:
+            raise Defect.newException(&"Couldn't find a post with number {id}")
+        else:
+            return none(Post)
 
     post.num_words = post.body.split(re("\\s")).len
     # If the post was previously published,

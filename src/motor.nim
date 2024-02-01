@@ -1,4 +1,3 @@
-import strformat
 import strutils
 import sequtils
 import options
@@ -8,6 +7,16 @@ import os
 
 import html_strings
 import post
+
+type
+    PostModification = enum
+        Added,
+        Removed,
+        Updated
+
+    ModifiedPost = object
+        post*: Post
+        modification*: PostModification
 
 # https://math.stackexchange.com/a/3056363
 proc closest_multiple_to_n(multiple: int, n: int): int =
@@ -19,7 +28,14 @@ proc get_num_posts(): int =
     return toSeq(walkDir("raw/", relative=true)).len
 
 proc generate_post_html(post: Post, publish_date: string): string =
-    var post_html = HEADER.replace("href=\"", "href=\"../") & """    <div class="post">
+    # We have to pick and choose what we replace,
+    # because otherwise the Github link will break
+    var header = HEADER.replace("href=\"styles.css", "href=\"../styles.css")
+                       .replace("href=\"index.html", "href=\"../index.html")
+                       .replace("href=\"about.html", "href=\"../about.html")
+                       .replace("href=\"things.html", "href=\"../things.html")
+    var post_html = header & """    <a class="backButton" href="../index.html">< Back</a>
+        <div class="post">
         <div class="title">""" & post.title & """</div>
         <div class="publishDate">""" & publish_date & """</div>
         <div class="body">
@@ -49,9 +65,9 @@ proc generate_thumbnail_html(post: Post, publish_date: string): string =
 
 proc generate_homepage_html(publish_date: string): string =
     var homepage_html = HEADER & "    <div class=\"postList\">\n        <div class=\"row\">\n"
-    var num_thumbnails = closest_multiple_to_n(3, get_num_posts())
+    let num_thumbnails = closest_multiple_to_n(3, get_num_posts())
     for i in 1..num_thumbnails:
-        let post = create_post(i, true)
+        let post = create_post(i, true, true)
         if post.isSome:
             homepage_html.add(generate_thumbnail_html(post.get(), publish_date))
         # Properly align last row even if
@@ -74,15 +90,6 @@ proc generate_homepage_html(publish_date: string): string =
     homepage_html.add("    </div>\n</body>\n</html>")
     return homepage_html
 
-# proc add_post() =
-#     generate_homepage_html()
-
-# proc remove_post() =
-#     generate_homepage_html()
-
-# proc update_post() =
-#     generate_homepage_html()
-
 proc help() =
     echo """Commands:
 h               - display this help menu
@@ -95,12 +102,11 @@ q!              - quit without confirmation
 pq              - publish changes and quit"""
 
 proc main() =
-    var made_changes = false
     var published = false
-    var new_posts: seq[Post]
+    var modified_posts: seq[ModifiedPost]
     while true:
         write(stdout, "> ")
-        var input: seq[string] = readLine(stdin).split()
+        let input: seq[string] = readLine(stdin).split()
         # Meridiem will be uppercase by default
         let meridiem = now().format("tt").toLower()
         let publish_date = now().format("M/dd/yyyy h:mm") & meridiem
@@ -108,36 +114,54 @@ proc main() =
             of "h": help()
             of "q":
                 # Support "q!" command
-                if not published and made_changes and input.len == 1:
+                if not published and modified_posts.len > 0 and input.len == 1:
                     write(stdout, "You have unpublished changes. Are you sure you want to exit? [y/n] ")
                     if readLine(stdin)[0] == 'n':
                         continue
                 break
-            of "a":
+            of "a", "u", "r":
                 let post_number = parseInt(input[1])
-                let option_post = create_post(post_number)
-                if option_post.isNone:
-                    raise Defect.newException(&"Error adding post (probably couldn't find a post with number {post_number})")
-                let post = option_post.get()
-                new_posts.add(post)
-                made_changes = true
-            of "r":
-                made_changes = true
-            of "u":
-                made_changes = true
+
+                var post: Option[Post]
+                try:
+                    post = create_post(post_number)
+                except Defect as d:
+                    echo d.msg
+                    continue
+
+                let modification = case input[0]:
+                                       of "a": Added
+                                       of "u": Updated
+                                       else:   Removed
+                modified_posts.add(ModifiedPost(post: post.get(), modification: modification))
             of "p", "pq":
-                if not made_changes:
+                if modified_posts.len == 0:
                     echo "Nothing new to publish!"
                     continue
-                var file = open("test_index.html", fmWrite)
-                file.write(generate_homepage_html(publish_date))
-                file.close()
 
-                for post in new_posts:
-                    file = open("posts/" & post.filename & ".html", fmWrite)
-                    file.write(generate_post_html(post, publish_date))
+                # There's no reason to generate a homepage
+                # if a post was only updated, so we'll only
+                # do it if a post was added or removed
+                var generate_homepage: bool = false
+
+                for post in modified_posts:
+                    case post.modification:
+                        of Added, Removed: generate_homepage = true
+                        else: discard
+
+                    if post.modification != Removed:
+                        let post_obj = post.post
+                        let file = open("posts/" & post_obj.filename & ".html", fmWrite)
+                        file.write(generate_post_html(post_obj, publish_date))
+                        file.close()
+
+                if generate_homepage:
+                    var file = open("index.html", fmWrite)
+                    file.write(generate_homepage_html(publish_date))
                     file.close()
+
                 published = true
+
                 # Support "pq" command
                 if input[0] == "pq":
                     break

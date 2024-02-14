@@ -10,7 +10,7 @@ const HEADER* = """<!DOCTYPE html>
     <h1>tjk's food for thought</h1>
     <div class="navBar">
         <a href="index.html">Home</a>
-        <a href="https://github.com/tjk113">Github</a>
+        <a href="https://github.com/tjk113" target="_blank">Github</a>
         <a href="about.html">About</a>
         <a href="things.html">Things</a>
     </div>

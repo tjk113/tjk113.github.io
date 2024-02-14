@@ -139,6 +139,11 @@ on rows without three posts */
     font-size: large;
 }
 
+.post a {
+    color: blue;
+    text-decoration: underline;
+}
+
 .backButton {
     font-size: 20px;
     width: 60%;

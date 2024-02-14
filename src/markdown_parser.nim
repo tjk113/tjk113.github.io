@@ -10,6 +10,7 @@ import strutils
 # '## ..'        - Heading2
 # '### ..'       - Heading3
 # TODO: 
+# '[text](link)' - Hyperlink text
 # '1. ...'       - Numbered List
 # '- ...'        - Bulleted List
 

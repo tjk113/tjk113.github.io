@@ -1,5 +1,0 @@
-title="Thoughts on High-Level and Low-Level Language"
-desc=""
--
-When distinguishing between high-level and low-level languages, I feel there is a distinction to be made between *use* and *abstraction*. You can often use high-level languages to do low-level things. Controlling GPIO pins on a Raspberry Pi, for example, can be done from Python, which abstracts away many details from the programmer. Conversely, you can also implement high-level abstractions in comparatively lower-level languages, like writing a hash map in C.
-Of course, the terms high-level and low-level are most often used to describe a language's level of *abstraction* exclusively. Labels like these obviously don't even matter in any significant way, but I think it's interesting to consider that most languages can be used for high- or low-level applications.

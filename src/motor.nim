@@ -38,6 +38,7 @@ proc generate_post_html(post: Post, publish_date: string): string =
         <div class="post">
         <div class="title">""" & post.title & """</div>
         <div class="publishDate">""" & publish_date & """</div>
+        <div class="snippet">""" & post.desc & """</div>
         <div class="body">
 """
     # Proper indentation
@@ -59,6 +60,7 @@ proc generate_thumbnail_html(post: Post, publish_date: string): string =
                 <a href="posts/""" & post.filename & """.html"><div class="body">
                     <div class="title">""" & post.title & """</div>
                     <div class="publishDate">""" & temp_publish_date & """</div>
+                    <div class="snippet">""" & post.desc & """</div>
                 </div></a>
             </div>
 """
@@ -112,9 +114,9 @@ proc main() =
         let publish_date = now().format("M/dd/yyyy h:mm") & meridiem
         case input[0]:
             of "h": help()
-            of "q":
+            of "q", "q!":
                 # Support "q!" command
-                if not published and modified_posts.len > 0 and input.len == 1:
+                if not published and modified_posts.len > 0 and input[0].len == 1:
                     write(stdout, "You have unpublished changes. Are you sure you want to exit? [y/n] ")
                     if readLine(stdin)[0] == 'n':
                         continue
@@ -139,26 +141,16 @@ proc main() =
                     echo "Nothing new to publish!"
                     continue
 
-                # There's no reason to generate a homepage
-                # if a post was only updated, so we'll only
-                # do it if a post was added or removed
-                var generate_homepage: bool = false
-
                 for post in modified_posts:
-                    case post.modification:
-                        of Added, Removed: generate_homepage = true
-                        else: discard
-
                     if post.modification != Removed:
                         let post_obj = post.post
                         let file = open("posts/" & post_obj.filename & ".html", fmWrite)
                         file.write(generate_post_html(post_obj, publish_date))
                         file.close()
 
-                if generate_homepage:
-                    var file = open("index.html", fmWrite)
-                    file.write(generate_homepage_html(publish_date))
-                    file.close()
+                var file = open("index.html", fmWrite)
+                file.write(generate_homepage_html(publish_date))
+                file.close()
 
                 published = true
 

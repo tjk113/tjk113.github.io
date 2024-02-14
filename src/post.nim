@@ -1,6 +1,8 @@
 import strformat
 import strutils
+import sequtils
 import options
+import sugar
 import times
 import re
 import os
@@ -17,8 +19,13 @@ type Post* = object
     id*: int
 
 proc get_title_and_desc(text: string): (string, string) =
-    var title_and_desc: array[2, string]
-    discard text.find(re("=\"(.*)\""), title_and_desc)
+    # Nim's `re` module incorrectly handles capture groups
+    # for `findAll`, so we have to work around it here
+    # https://forum.nim-lang.org/t/10295
+    var title_and_desc = text.findAll(re("=\"(.*)\"\\s"))
+    title_and_desc = collect(newSeq):
+        for elem in title_and_desc:
+            elem.substr(2, len(elem) - 3)
     return (title_and_desc[0], title_and_desc[1])
 
 proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool = false): Option[Post] =

@@ -2,16 +2,16 @@ const HEADER* = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>tjk's food for thought</title>
+    <title>bloggolb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="styles.css" type="text/css" rel="stylesheet">
     <script src="index.js" type="text/javascript"></script>
 </head>
 <body>
-    <h1>tjk's food for thought</h1>
-    <div class="navBar">
-        <a href="index.html">Home</a>
+    <nav>
+        <a class="homeText" href="index.html">bloggolb</a>
         <a href="https://github.com/tjk113" target="_blank">Github</a>
         <a href="about.html">About</a>
         <a href="things.html">Things</a>
-    </div>
+    </nav>
 """

@@ -17,7 +17,7 @@ type Post* = object
     desc*: string
     id*: int
 
-proc get_title_and_desc(text: string): (string, string) =
+proc get_title_and_desc(text: string): seq[string] =
     # Nim's `re` module incorrectly handles capture groups
     # for `findAll`, so we have to work around it here
     # https://forum.nim-lang.org/t/10295
@@ -25,7 +25,7 @@ proc get_title_and_desc(text: string): (string, string) =
     title_and_desc = collect(newSeq):
         for elem in title_and_desc:
             elem.substr(2, len(elem) - 3)
-    return (title_and_desc[0], title_and_desc[1])
+    return title_and_desc
 
 proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool = false): Option[Post] =
     var post = Post(id: id)
@@ -40,7 +40,7 @@ proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool 
                 # The body starts after the '-' line
                 let split = text.split(re("-[\\s]*"), 1)
                 if split.len < 2:
-                    raise Defect.newException("Couldn't find the '-' delimiter while parsing \"" & path & "\"")
+                    raise Defect.newException("Error: Couldn't find the '-' delimiter while parsing \"" & path & "\"")
                 post.body = split[1]
                 if not dont_parse_markdown:
                     var parser = create_markdown_parser(post.body)
@@ -55,7 +55,7 @@ proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool 
 
     if not post_exists:
         if not can_be_none:
-            raise Defect.newException(&"Couldn't find a post with number {id}")
+            raise Defect.newException(&"Error: Couldn't find a post with number {id}")
         else:
             return none(Post)
 

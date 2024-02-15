@@ -1,10 +1,10 @@
 @font-face {
-    font-family: "Fixedsys Excelsior";
-    src: url("Fixedsys Excelsior.ttf");
+    font-family: "Anonymous Pro";
+    src: url("font/AnonymousPro-Regular.ttf");
 }
 
 body {
-    font-family: 'Fixedsys Excelsior';
+    font-family: "Anonymous Pro";
     /* font-weight: bold; */
     justify-content: center;
     text-align: center;
@@ -17,36 +17,65 @@ a {
     text-decoration: none;
 }
 
-.navBar {
-    background-color: rgb(185, 189, 189);
+p {
+    @media (max-width: 1080px) {
+        font-size: medium;
+    }
+    @media (min-width: 1081px) {
+        font-size: x-large;
+    }
+}
+
+nav {
+    background-color: rgb(231, 231, 231);
     justify-content: center;
     display: flex;
     flex-direction: row;
-    font-size: 35px;
-    /* margin-top: 1%;
-    margin-bottom: 1%; */
+    @media (max-width: 1080px) {
+        font-size: large;
+    }
+    @media (min-width: 1081px) {
+        font-size: xx-large;
+    }
     margin-left: auto;
     margin-right: auto;
     border-radius: 8px;
-    height: 5%;
-    width: 60%;
-    /* min-width: 750px; */
+    height: 10%;
+    @media (max-width: 1080px) {
+        width: 100%;
+    }
+    @media (min-width: 1081px) {
+        width: 90%;
+    }
+    max-width: 1150px;
 }
 
-.navBar a {
-    /* color: #70000b; */
+nav .homeText {
+    @media (min-width: 1081px) {
+        margin-right: 42%;
+    }
+}
+
+nav a {
+    text-decoration: none;
+    transition: color 0.25s;
     padding-left: 5px;
     padding-right: 5px;
-    text-decoration: none;
     margin-top: 1px;
     margin-bottom: 1px;
-    margin-left: 3%;
-    margin-right: 3%;
+    @media (max-width: 1080px) {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+    @media (min-width: 1081px) {
+        margin-left: 3%;
+        margin-right: 3%;
+    }
     border-radius: 8px;
 }
 
-.navBar a:hover {
-    background-color: rgb(199, 199, 199);
+nav a:hover {
+    color: rgb(126, 183, 213);
 }
 
 .postList {
@@ -56,8 +85,8 @@ a {
     margin-left: auto;
     margin-right: auto;
     height: 90%;
-    width: 60%;
-    /* min-width: 750px; */
+    width: 90%;
+    max-width: 1150px;
     padding: 2%;
 }
 
@@ -67,8 +96,20 @@ a {
 }
 
 .row .thumbnail {
-    width: 60%;
+    @media (max-width: 1080px) {
+        width: 70%;
+    }
+    @media (min-width: 1081px) {
+        width: 60%;
+    }
     padding: 2%;
+}
+
+/* Center the body in thumbnails */
+.row .thumbnail a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 /* Used to retain alignment
@@ -80,11 +121,21 @@ on rows without three posts */
 
 .thumbnail .body {
     background-color: rgba(221, 224, 224, 0.785);
-    transition: background-color 0.5s;
+    transition: background-color 0.25s;
     border-radius: 8px;
-    font-size: x-large;
+    @media (max-width: 1080px) {
+        font-size: medium;
+    }
+    @media (min-width: 1081px) {
+        font-size: x-large;
+    }
     text-align: left;
-    padding: 3%;
+    @media (max-width: 1080px) {
+        padding: 10%;
+    }
+    @media (min-width: 1081px) {
+        padding: 3%;
+    }
 }
 
 .thumbnail .body:hover {
@@ -98,16 +149,32 @@ on rows without three posts */
 
 .thumbnail .publishDate {
     font-style: italic;
-    font-size: large;
+    @media (max-width: 1080px) {
+        font-size: medium;
+    }
+    @media (min-width: 1081px) {
+        font-size: large;
+    }
 }
 
 .thumbnail .snippet {
-    font-size: medium;
+    @media (max-width: 1080px) {
+        font-size: small;
+    }
+    @media (min-width: 1081px) {
+        font-size: medium;
+    }
 }
 
 .post {
     height: 90%;
-    width: 60%;
+    @media (max-width: 1080px) {
+        width: 100%;
+    }
+    @media (min-width: 1081px) {
+        width: 90%;
+    }
+    max-width: 1150px;
     margin-top: 3%;
     margin-left: auto;
     margin-right: auto;
@@ -115,18 +182,42 @@ on rows without three posts */
 }
 
 .post .title {
-    font-size: xxx-large;
+    @media (max-width: 1080px) {
+        font-size: xx-large;
+        margin-left: 2%;
+    }
+    @media (min-width: 1081px) {
+        font-size: xxx-large;
+        margin-left: 5%;
+    }
 }
 
 .post .publishDate {
     font-style: italic;
-    font-size: xx-large;
+    @media (max-width: 1080px) {
+        font-size: x-large;
+        margin-left: 2%;
+    }
+    @media (min-width: 1081px) {
+        font-size: xx-large;
+        margin-left: 5%;
+    }
 }
 
 .post .body {
-    margin: 5%;
+    @media (max-width: 1080px) {
+        margin: 0%;
+    }
+    @media (min-width: 1081px) {
+        margin: 5%;
+    }
     text-indent: 8%;
-    font-size: 24px;
+    @media (max-width: 1080px) {
+        font-size: medium;
+    }
+    @media (min-width: 1081px) {
+        font-size: x-large;
+    }
 }
 
 .post .body h1, .post .body h2, .post .body h3 {
@@ -134,7 +225,7 @@ on rows without three posts */
 }
 
 .post figure {
-    text-indent: 0;
+    text-indent: 0%;
     text-align: center;
     font-size: large;
 }
@@ -142,19 +233,6 @@ on rows without three posts */
 .post a {
     color: blue;
     text-decoration: underline;
-}
-
-.backButton {
-    font-size: 20px;
-    width: 60%;
-    padding-top: 1%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-}
-
-.backButton:onhover {
-    background-color: red;
 }
 
 .darkModeButton {

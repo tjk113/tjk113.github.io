@@ -9,10 +9,12 @@ import strutils
 # '# ..'         - Heading
 # '## ..'        - Heading2
 # '### ..'       - Heading3
+# '[text](link)' - Hyperlink/Anchor text
 # TODO: 
-# '[text](link)' - Hyperlink text
 # '1. ...'       - Numbered List
 # '- ...'        - Bulleted List
+# `...`          - Code snippet
+# ```...```      - Code block
 
 type
     MarkdownParser* = object
@@ -21,14 +23,17 @@ type
         pos: int
 
     TextFormat = enum
-        None       = 0,
-        Italic     = 1,
-        Bold       = 2,
-        BoldItalic = 3,
-        Paragraph  = 4
-        Heading    = 5,
-        Heading2   = 6,
-        Heading3   = 7
+        Tag        = -1,
+        None       =  0,
+        Italic     =  1,
+        Bold       =  2,
+        BoldItalic =  3,
+        Paragraph  =  4
+        Heading    =  5,
+        Heading2   =  6,
+        Heading3   =  7,
+        LinkText   =  8
+        LinkRef    =  9
 
 const special_chars = ['*', '#', '\\']
 const void_elements = ["<area>", "<base>", "<br>", "<col>", "<command>", "<embed>", "<hr>", "<img>", "<input>", "<keygen>", "<link>", "<meta>", "<param>", "<source>", "<track>", "<wbr>"]
@@ -38,7 +43,7 @@ proc create_markdown_parser*(src: string): MarkdownParser =
 
 proc next(self: var MarkdownParser): char =
     if self.pos >= self.len:
-        raise IndexDefect.newException("Tried to read past end of text")
+        raise IndexDefect.newException("Error: Tried to read past end of text")
     else:
         let next = self.src[self.pos]
         inc self.pos
@@ -46,18 +51,11 @@ proc next(self: var MarkdownParser): char =
 
 proc peek(self: MarkdownParser, offset: int = 0): char =
     if self.pos >= self.len:
-        raise IndexDefect.newException("Tried to read past end of text")
+        raise IndexDefect.newException("Error: Tried to read past end of text")
     return self.src[self.pos + offset]
 
-proc prev(self: var MarkdownParser): char =
-    if self.pos - 1 < 0:
-        raise IndexDefect.newException("Tried to read before beginning of text")
-    else:
-        dec self.pos
-    return self.src[self.pos]
-
 proc is_at_end(self: var MarkdownParser): bool =
-    return (if self.pos < self.src.len - 1: false else: true)
+    return (if self.pos < self.src.len: false else: true)
 
 proc parse_tag(self: var MarkdownParser): string =
     var tag: string
@@ -74,96 +72,136 @@ proc remove_attributes(tag: string): string =
     return tag
 
 proc parse*(self: var MarkdownParser): string =
-    var looking_for = TextFormat.None
-    var in_paragraph = false
-    var in_raw_tag = false
+    var format_stack: seq[TextFormat]
+    var current_link_text: string
+    var indent = ""
     var parsed_text: string
     var c: char
     while not self.is_at_end():
         c = self.next()
         case c:
             of '*':
-                if not in_paragraph and self.peek(-2) == '\n':
-                    looking_for = TextFormat.Paragraph
-                    in_paragraph = true
-                    parsed_text.add("<p>")
+                if format_stack.len == 0 or TextFormat.Paragraph notin format_stack and
+                   self.peek(-2) == '\n':
+                        echo "ngl i did add that shit"
+                        format_stack.add(TextFormat.Paragraph)
+                        parsed_text.add("<p>")
                 # Separate so that we can either
                 # prepend an opening or closing
                 # tag in one case statement
                 var tag_prefix = "<"
 
-                if looking_for == TextFormat.Paragraph:
-                    looking_for = TextFormat.Italic
+                var format = TextFormat.Italic
+
+                # Determine what style to use based
+                # on the number of asterisks
+                if format_stack[^1] == TextFormat.Paragraph:
                     while self.peek() == '*':
-                        inc looking_for
-                        discard self.next()
+                        inc format
+                        if self.peek(2) != '*':
+                            discard self.next()
+                    format_stack.add(format)
                 # If we're looking for a closing
-                # symbol, add the closing slash
+                # asterisk, add the closing slash
                 # to the tag
                 else:
+                    while self.peek() == '*':
+                        discard self.next()
+                    format = format_stack.pop()
                     tag_prefix.add('/')
 
-                case looking_for:
+                case format:
                     of TextFormat.Italic:     parsed_text.add(tag_prefix & "em>")
                     of TextFormat.Bold:       parsed_text.add(tag_prefix & "strong>")
                     of TextFormat.BoldItalic: parsed_text.add(tag_prefix & "em>" & tag_prefix & "strong>")
                     else: discard
-                # Couldn't think of a less
-                # jank way to skip the
-                # closing '*'s...
-                if tag_prefix.len > 1:
-                    # Skip over remaining '*'s
-                    while self.peek() == '*':
-                        discard self.next()
-                    # Don't lose track of whether we're in a paragraph
-                    looking_for = (if in_paragraph: TextFormat.Paragraph
-                                   else:            TextFormat.None)
+            of '[':
+                # Weird hack so that I can do my little [noindent]
+                # tag on paragraphs I don't want to start with indents
+                if self.src.substr(self.pos, self.pos + 7) == "noindent":
+                    indent = "style=\"text-indent: 0px;\""
+                    self.pos += 9
+                    continue
+                if format_stack.len > 0 and format_stack[^1] != TextFormat.LinkText:
+                    var i = 0
+                    while self.peek(i) != ']' and self.pos + i < self.len:
+                        inc i
+                    if self.peek(i + 1) == '(':
+                        parsed_text.add("<a target=\"_blank\" href=\"")
+                        format_stack.add(TextFormat.LinkText)
+                else:
+                    parsed_text.add(c)
+            of ']', '(':
+                if format_stack.len > 0:
+                    if format_stack[^1] == TextFormat.LinkText:
+                        discard format_stack.pop()
+                        format_stack.add(TextFormat.LinkRef)
+                        continue
+                    elif format_stack[^1] == TextFormat.LinkRef:
+                        continue
+                parsed_text.add(c)
+            of ')':
+                if format_stack.len > 0 and format_stack[^1] == TextFormat.LinkRef:
+                    parsed_text.add("\">" & current_link_text & "</a>")
+                    current_link_text = ""
+                    discard format_stack.pop()
+                else:
+                    parsed_text.add(c)
             of '#':
-                looking_for = TextFormat.Heading
+                format_stack.add(TextFormat.Heading)
                 while self.peek() == '#':
-                    inc looking_for
+                    inc format_stack[^1]
                     discard self.next()
                 # Skip over space after '#'
-                discard self.next()
-
-                case looking_for:
+                if self.peek() == ' ':
+                    discard self.next()
+                
+                case format_stack[^1]:
                     of TextFormat.Heading:  parsed_text.add("<h1>")
                     of TextFormat.Heading2: parsed_text.add("<h2>")
                     of TextFormat.Heading3: parsed_text.add("<h3>")
                     else: discard
             of '\n':
-                case looking_for:
-                    of TextFormat.Paragraph: parsed_text.add("</p>\n")
-                    of TextFormat.Heading:   parsed_text.add("</h1>\n")
-                    of TextFormat.Heading2:  parsed_text.add("</h2>\n")
-                    of TextFormat.Heading3:  parsed_text.add("</h3>\n")
-                    else:                    parsed_text.add("\n")
-                # We know we're closing a top-level
-                # tag, so we just reset these
-                looking_for = TextFormat.None
-                in_paragraph = false
+                if format_stack.len > 0:
+                    case format_stack[^1]:
+                        of TextFormat.Paragraph: parsed_text.add("</p>\n")
+                        of TextFormat.Heading:   parsed_text.add("</h1>\n")
+                        of TextFormat.Heading2:  parsed_text.add("</h2>\n")
+                        of TextFormat.Heading3:  parsed_text.add("</h3>\n")
+                        else:                    parsed_text.add("\n")
+                    indent = ""
+                    # We know we're closing a top-level tag here
+                    discard format_stack.pop()
             # Windows...
             of '\r': continue
             # Don't interfere with raw tags
             of '<':
                 var tag = self.parse_tag()
-                if not in_raw_tag and remove_attributes(tag) notin void_elements:
-                    in_raw_tag = true
-                if in_raw_tag and '/' in tag:
-                    in_raw_tag = false
+                if format_stack.len > 0:
+                    if format_stack[^1] != TextFormat.Tag and
+                       remove_attributes(tag) notin void_elements:
+                            format_stack.add(TextFormat.Tag)
+                    elif format_stack[^1] == TextFormat.Tag and '/' in tag:
+                        discard format_stack.pop()
                 parsed_text.add(tag)
             # Escape special characters
             of '\\':
                 if self.peek() in special_chars:
                     parsed_text.add(self.next()) 
             else:
-                if in_paragraph or in_raw_tag or ord(looking_for) >= ord(TextFormat.Heading):
-                    parsed_text.add(c)
+                if format_stack.len > 0:
+                    if format_stack[^1] == TextFormat.LinkText:
+                        current_link_text.add(c)
+                        continue
+                    elif TextFormat.Paragraph in format_stack or
+                         format_stack[^1] == TextFormat.Tag or
+                         ord(format_stack[^1]) >= ord(TextFormat.Heading):
+                            parsed_text.add(c)
+                            continue
                 else:
-                    parsed_text.add("<p>" & c)
-                    looking_for = TextFormat.Paragraph
-                    in_paragraph = true
+                    parsed_text.add("<p" & indent & ">" & c)
+                    format_stack.add(TextFormat.Paragraph)
     # Add final closing paragraph tag
-    if in_paragraph:
+    if format_stack.len > 0 and format_stack[^1] == TextFormat.Paragraph:
         parsed_text.add("</p>")
     return parsed_text

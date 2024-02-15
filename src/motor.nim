@@ -1,3 +1,4 @@
+import std/enumerate
 import strutils
 import sequtils
 import options
@@ -27,6 +28,12 @@ proc closest_multiple_to_n(multiple: int, n: int): int =
 proc get_num_posts(): int =
     return toSeq(walkDir("raw/", relative=true)).len
 
+proc get_modified_post_ids(modified_posts: seq[ModifiedPost]): seq[int] =
+    var ids: seq[int]
+    for post in modified_posts:
+        ids.add(post.post.id)
+    return ids
+
 proc generate_post_html(post: Post, publish_date: string): string =
     # We have to pick and choose what we replace,
     # because otherwise the Github link will break
@@ -34,12 +41,10 @@ proc generate_post_html(post: Post, publish_date: string): string =
                        .replace("href=\"index.html", "href=\"../index.html")
                        .replace("href=\"about.html", "href=\"../about.html")
                        .replace("href=\"things.html", "href=\"../things.html")
-    var post_html = header & """    <a class="backButton" href="../index.html">< Back</a>
-        <div class="post">
-        <div class="title">""" & post.title & """</div>
-        <div class="publishDate">""" & publish_date & """</div>
-        <div class="snippet">""" & post.desc & """</div>
-        <div class="body">
+    var post_html = header & """    <div class="post">
+    <div class="title">""" & post.title & """</div>
+    <div class="publishDate">""" & publish_date & """</div>
+    <div class="body">
 """
     # Proper indentation
     for line in post.body.splitLines():
@@ -68,7 +73,15 @@ proc generate_thumbnail_html(post: Post, publish_date: string): string =
 proc generate_homepage_html(publish_date: string): string =
     var homepage_html = HEADER & "    <div class=\"postList\">\n        <div class=\"row\">\n"
     let num_thumbnails = closest_multiple_to_n(3, get_num_posts())
+    # let post_ids = get_modified_post_ids(modified_posts)
     for i in 1..num_thumbnails:
+        # var post: Option[Post]
+        # # If the post with the ID `i` isn't
+        # # supposed to be touched, then
+        # # leave it alone
+        # if i notin post_ids:
+        #     post = none(Post)
+        # else:
         let post = create_post(i, true, true)
         if post.isSome:
             homepage_html.add(generate_thumbnail_html(post.get(), publish_date))
@@ -104,59 +117,78 @@ q!              - quit without confirmation
 pq              - publish changes and quit"""
 
 proc main() =
-    var published = false
-    var modified_posts: seq[ModifiedPost]
-    while true:
-        write(stdout, "> ")
-        let input: seq[string] = readLine(stdin).split()
-        # Meridiem will be uppercase by default
-        let meridiem = now().format("tt").toLower()
-        let publish_date = now().format("M/dd/yyyy h:mm") & meridiem
-        case input[0]:
-            of "h": help()
-            of "q", "q!":
-                # Support "q!" command
-                if not published and modified_posts.len > 0 and input[0].len == 1:
-                    write(stdout, "You have unpublished changes. Are you sure you want to exit? [y/n] ")
-                    if readLine(stdin)[0] == 'n':
-                        continue
-                break
-            of "a", "u", "r":
-                let post_number = parseInt(input[1])
+    # var published = false
+    # var modified_posts: seq[ModifiedPost]
+    # while true:
+    #     write(stdout, "> ")
+    #     let input: seq[string] = readLine(stdin).split()
+    # Meridiem will be uppercase by default
+    let meridiem = now().format("tt").toLower()
+    let publish_date = now().format("M/dd/yyyy h:mm") & meridiem
+    #     case input[0]:
+    #         of "h": help()
+    #         of "q", "q!":
+    #             # Support "q!" command
+    #             if not published and modified_posts.len > 0 and input[0].len == 1:
+    #                 write(stdout, "You have unpublished changes. Are you sure you want to exit? [y/n] ")
+    #                 if readLine(stdin)[0] == 'n':
+    #                     continue
+    #             break
+    #         of "a", "u", "r":
+    #             var post_number: int
+    #             try:
+    #                 post_number = parseInt(input[1])
+    #             except IndexDefect:
+    #                 echo "Error: Please provide a post number"
+    #                 continue
 
-                var post: Option[Post]
-                try:
-                    post = create_post(post_number)
-                except Defect as d:
-                    echo d.msg
-                    continue
+    #             var post: Option[Post]
+    #             try:
+    #                 post = create_post(post_number)
+    #             except Defect as d:
+    #                 echo d.msg
+    #                 continue
 
-                let modification = case input[0]:
-                                       of "a": Added
-                                       of "u": Updated
-                                       else:   Removed
-                modified_posts.add(ModifiedPost(post: post.get(), modification: modification))
-            of "p", "pq":
-                if modified_posts.len == 0:
-                    echo "Nothing new to publish!"
-                    continue
+    #             let modification = case input[0]:
+    #                                    of "a": Added
+    #                                    of "u": Updated
+    #                                    else:   Removed
+    #             modified_posts.add(ModifiedPost(post: post.get(), modification: modification))
+    #         of "p", "pq":
+    #             if modified_posts.len == 0:
+    #                 echo "Nothing new to publish!"
+    #                 continue
 
-                for post in modified_posts:
-                    if post.modification != Removed:
-                        let post_obj = post.post
-                        let file = open("posts/" & post_obj.filename & ".html", fmWrite)
-                        file.write(generate_post_html(post_obj, publish_date))
-                        file.close()
+    #             for post in modified_posts:
+    #                 if post.modification != Removed:
+    #                     let post_obj = post.post
+    #                     let file = open("posts/" & post_obj.filename & ".html", fmWrite)
+    #                     file.write(generate_post_html(post_obj, publish_date))
+    #                     file.close()
 
-                var file = open("index.html", fmWrite)
-                file.write(generate_homepage_html(publish_date))
-                file.close()
+    #             var file = open("index.html", fmWrite)
+    #             file.write(generate_homepage_html(modified_posts, publish_date))
+    #             file.close()
 
-                published = true
+    #             published = true
 
-                # Support "pq" command
-                if input[0] == "pq":
-                    break
+    #             # Support "pq" command
+    #             if input[0] == "pq":
+    #                 break
+    #         of "\n", "\r", "\r\n", "":
+    #             continue
+    #         else:
+    #             echo "Error: unknown command"
+
+    for i in 1..get_num_posts():
+        let post_obj = create_post(i).get()
+        let file = open("posts/" & post_obj.filename & ".html", fmWrite)
+        file.write(generate_post_html(post_obj, publish_date))
+        file.close()
+
+    var file = open("index.html", fmWrite)
+    file.write(generate_homepage_html(publish_date))
+    file.close()
 
 when isMainModule:
     main()

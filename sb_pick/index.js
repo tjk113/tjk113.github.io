@@ -12,7 +12,7 @@ const s4Choices = [5,   // Have You Seen This Snail?
 const productionNumberToEpisode = [["1a", "1b", "1c", "2a", "2b", "3a", "3b", "4a", "4b", "5a", "5b", "6a", "6b", "7a", "7b", "8a", "8b", "9a", "9b", "10a", "10b", "11a", "11b", "12a", "12b", "13a", "13b", "14a", "14b", "15a", "15b", "16a", "16b", "17a", "17b", "18a", "18b", "19a", "19b", "20a", "20b"],
                                    ["1a", "1b", "2a", "2b", "3a", "3b", "4a", "4b", "5a", "5b", "6a", "6b", "7a", "7b", "8", "9a", "9b", "10a", "10b", "11a", "11b", "12a", "12b", "13a", "13b", "14a", "14b", "15a", "15b", "16a", "16b", "17a", "17b", "18a", "18b", "19a", "19b", "20a", "20b"],
                                    ["1a", "1b", "2a", "2b", "3a", "3b", "4a", "4b", "5a", "5b", "6a", "6b", "7a", "7b", "8a", "8b", "9a", "9b", "10a", "10b", "11", "12a", "12b", "13a", "13b", "14", "15a", "15b", "16a", "16b", "17a", "17b", "18a", "18b", "19", "20a", "20b"],
-                                   ["", "", "", "", "4", "", "", "", "", "", "", "", "", "", "9a", "", "", "", "", "", "", "", "13a"]];
+                                   ["", "", "", "", "3", "", "", "", "", "", "", "", "", "", "9a", "", "", "", "", "", "", "", "13a"]];
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomIntInclusive(min, max) {
@@ -95,8 +95,8 @@ if (theButton.length != 0) {
             titleCardFrame = "0688";
         else if (episode.season == 3 && episode.episodeNumber == 26) // Ugh
             titleCardFrame = "0607";
-        else
-            titleCardFrame = "0003";
+        else if (episode.season == 4 && episode.episodeNumber == 4)  // Have You Seen This Snail?
+            titleCardFrame = "0178"
 
         titleCard.src = `https://frames.everyfra.me/spongebob/S${paddedSeason}E${paddedEpisode}/${titleCardFrame}.png`;
         episodeFrame.src = `https://frames.everyfra.me/spongebob/S${paddedSeason}E${paddedEpisode}/0500.png`;

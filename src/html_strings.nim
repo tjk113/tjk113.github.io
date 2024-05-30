@@ -5,7 +5,6 @@ const HEADER* = """<!DOCTYPE html>
     <title>bloggolb</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="styles.css" type="text/css" rel="stylesheet">
-    <script src="index.js" type="text/javascript"></script>
 </head>
 <body>
     <nav>

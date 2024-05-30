@@ -26,7 +26,12 @@ proc closest_multiple_to_n(multiple: int, n: int): int =
     return ceilDiv(n, multiple) * multiple
 
 proc get_num_posts(): int =
-    return toSeq(walkDir("raw/", relative=true)).len
+    let posts = toSeq(walkDir("raw/", relative=true))
+    var num_posts = 0
+    for post in posts:
+        if post.kind == pcFile:
+            inc num_posts
+    return num_posts
 
 proc get_modified_post_ids(modified_posts: seq[ModifiedPost]): seq[int] =
     var ids: seq[int]
@@ -35,6 +40,10 @@ proc get_modified_post_ids(modified_posts: seq[ModifiedPost]): seq[int] =
     return ids
 
 proc generate_post_html(post: Post, publish_date: string): string =
+    var temp_publish_date = publish_date
+    if post.publish_date.isSome:
+        let meridiem = post.publish_date.get().format("tt").toLower()
+        temp_publish_date = post.publish_date.get().format("M/dd/yyyy h:mm") & meridiem
     # We have to pick and choose what we replace,
     # because otherwise the Github link will break
     var header = HEADER.replace("href=\"styles.css", "href=\"../styles.css")
@@ -43,7 +52,7 @@ proc generate_post_html(post: Post, publish_date: string): string =
                        .replace("href=\"things.html", "href=\"../things.html")
     var post_html = header & """    <div class="post">
     <div class="title">""" & post.title & """</div>
-    <div class="publishDate">""" & publish_date & """</div>
+    <div class="publishDate">""" & temp_publish_date & """</div>
     <div class="body">
 """
     # Proper indentation
@@ -52,7 +61,7 @@ proc generate_post_html(post: Post, publish_date: string): string =
     # Gotta make sure that raw HTML
     # no one's reading is pretty :D
     post_html.removeSuffix('\n')
-    post_html.add("\n        </div>\n    </div>\n</body>\n</html>")
+    post_html.add("\n        </div>\n    </div>\n</body>\n</html>\n<script src=\"../index.js\" type=\"text/javascript\"></script>")
     
     return post_html
 
@@ -102,7 +111,7 @@ proc generate_homepage_html(publish_date: string): string =
             if i != num_thumbnails:
                 homepage_html.add("        <div class=\"row\">\n")
 
-    homepage_html.add("    </div>\n</body>\n</html>")
+    homepage_html.add("    </div>\n</body>\n</html>\n<script src=\"index.js\" type=\"text/javascript\"></script>")
     return homepage_html
 
 proc help() =

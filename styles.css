@@ -1,29 +1,70 @@
 @font-face {
-    font-family: "Anonymous Pro";
-    src: url("font/AnonymousPro-Regular.ttf");
+    font-family: "iA Writer Mono V Regular";
+    src: url("font/iAWriterMonoV.ttf");
+    font-style: normal;
+    font-weight: 100 1000;
+    font-stretch: 0% 200%;
+}
+
+@font-face {
+    font-family: "iA Writer Mono V Italic";
+    src: url("font/iAWriterMonoV-Italic.ttf");
+    font-style: italic;
+    font-weight: 100 1000;
+    font-stretch: 0% 200%;
+}
+
+:root {
+    --white: rgb(216, 216, 216);
+    --green: rgb(4, 255, 0);
 }
 
 body {
-    font-family: "Anonymous Pro";
-    /* font-weight: bold; */
+    font-family: "iA Writer Mono V Regular";
+    font-weight: normal;
     justify-content: center;
     text-align: center;
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+body.darkMode {
+    background-color: rgb(24, 24, 24);
+}
+
+::selection {
+    background-color: blue;
+    color: white;
+}
+
+.darkMode ::selection {
+    background-color: var(--green);
+    color: black;
 }
 
 a {
-    color: black;
-    text-decoration: none;
+    color: blue;
+    text-decoration: underline;
+    transition: background-color 0.2s;
+    transition: font-weight 500 0.2s;
 }
 
-p {
-    @media (max-width: 1080px) {
-        font-size: medium;
-    }
-    @media (min-width: 1081px) {
-        font-size: x-large;
-    }
+a:hover {
+    color: white;
+    background-color: blue;
+}
+
+.darkMode a {
+    color: var(--green);
+}
+
+.darkMode a:hover {
+    color: black;
+    background-color: var(--green);
 }
 
 nav {
@@ -31,34 +72,50 @@ nav {
     justify-content: center;
     display: flex;
     flex-direction: row;
-    @media (max-width: 1080px) {
-        font-size: large;
+    @media (max-width: 513px) {
+        font-size: 1.15em;
+    } 
+    @media (min-width: 514px) {
+        font-size: 1.45em;
     }
-    @media (min-width: 1081px) {
-        font-size: xx-large;
+    @media (min-width: 515px) {
+        font-size: 1.65em;
+    }
+    @media (min-width: 516px) {
+        font-size: 1.75em;
     }
     margin-left: auto;
     margin-right: auto;
     border-radius: 8px;
-    height: 10%;
-    @media (max-width: 1080px) {
+    @media (max-width: 1280px) {
         width: 100%;
     }
-    @media (min-width: 1081px) {
+    @media (min-width: 1281px) {
         width: 90%;
     }
     max-width: 1150px;
 }
 
+.darkMode nav {
+    color: var(--white);
+    background-color: rgb(57, 57, 57);
+}
+
 nav .homeText {
-    @media (min-width: 1081px) {
-        margin-right: 42%;
+    @media (max-width: 513px) {
+        margin-right: 0%;
+    }
+    @media (min-width: 514px) {
+        margin-right: auto;
+    }
+    @media (min-width: 1154px) {
+        margin-right: 45%;
     }
 }
 
 nav a {
+    color: black;
     text-decoration: none;
-    transition: color 0.25s;
     padding-left: 5px;
     padding-right: 5px;
     margin-top: 1px;
@@ -72,10 +129,22 @@ nav a {
         margin-right: 3%;
     }
     border-radius: 8px;
+    transition: font-weight 0.2s;
 }
 
 nav a:hover {
-    color: rgb(126, 183, 213);
+    font-weight: bolder;
+    color: blue;
+    background-color: rgb(231, 231, 231);
+}
+
+.darkMode nav a {
+    color: var(--white);
+}
+
+.darkMode nav a:hover {
+    color: var(--green);
+    background-color: inherit;
 }
 
 .postList {
@@ -100,16 +169,24 @@ nav a:hover {
         width: 70%;
     }
     @media (min-width: 1081px) {
-        width: 60%;
+        min-width: 22%;
+        max-width: 36%;
     }
     padding: 2%;
 }
 
 /* Center the body in thumbnails */
 .row .thumbnail a {
+    color: inherit;
+    background-color: inherit;
+    text-decoration: none;
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.darkMode .row .thumbnail a {
+    color: var(--white);
 }
 
 /* Used to retain alignment
@@ -117,29 +194,50 @@ on rows without three posts */
 .thumbnail .blank {
     background-color: white;
     color: white;
+    height: 100%;
+    width: 100%;
+    /* This helps keep lone thumbnails
+    from getting too wide in a row */
+    @media (min-width: 1081px) {
+        margin-left: 444px;
+        overflow-x: hidden;
+    }
+}
+
+.darkMode .thumbnail .blank {
+    background-color: rgb(24, 24, 24);
+    color: rgb(24, 24, 24);
 }
 
 .thumbnail .body {
     background-color: rgba(221, 224, 224, 0.785);
-    transition: background-color 0.25s;
+    transition: background-color 0.2s;
+    transition: font-weight 0.2s;
     border-radius: 8px;
-    @media (max-width: 1080px) {
-        font-size: medium;
-    }
-    @media (min-width: 1081px) {
-        font-size: x-large;
-    }
     text-align: left;
     @media (max-width: 1080px) {
+        font-size: medium;
         padding: 10%;
     }
     @media (min-width: 1081px) {
-        padding: 3%;
+        font-size: x-large;
+        padding: 4%;
     }
 }
 
 .thumbnail .body:hover {
+    color: blue;
+    font-weight: bolder;
     background-color: rgb(199, 199, 199);
+}
+
+.darkMode .thumbnail .body {
+    background-color: rgba(57, 57, 57, 0.785);
+}
+
+.darkMode .thumbnail .body:hover {
+    color: var(--green);
+    background-color: rgb(57, 57, 57);
 }
 
 .thumbnail .body:focus,
@@ -149,6 +247,8 @@ on rows without three posts */
 
 .thumbnail .publishDate {
     font-style: italic;
+    margin-top: 10px;
+    margin-bottom: 10px;
     @media (max-width: 1080px) {
         font-size: medium;
     }
@@ -162,7 +262,7 @@ on rows without three posts */
         font-size: small;
     }
     @media (min-width: 1081px) {
-        font-size: medium;
+        font-size: 0.6em;
     }
 }
 
@@ -181,7 +281,12 @@ on rows without three posts */
     text-align: left;
 }
 
+.darkMode .post {
+    color: var(--white);
+}
+
 .post .title {
+    font-weight: bold;
     @media (max-width: 1080px) {
         font-size: xx-large;
         margin-left: 2%;
@@ -193,30 +298,31 @@ on rows without three posts */
 }
 
 .post .publishDate {
+    font-weight: bold;
     font-style: italic;
     @media (max-width: 1080px) {
         font-size: x-large;
         margin-left: 2%;
     }
     @media (min-width: 1081px) {
-        font-size: xx-large;
+        font-size: x-large;
         margin-left: 5%;
     }
 }
 
 .post .body {
+    font-weight: normal;
     @media (max-width: 1080px) {
         margin: 0%;
     }
     @media (min-width: 1081px) {
         margin: 5%;
     }
-    text-indent: 8%;
     @media (max-width: 1080px) {
         font-size: medium;
     }
     @media (min-width: 1081px) {
-        font-size: x-large;
+        font-size: 135%;
     }
 }
 
@@ -227,17 +333,16 @@ on rows without three posts */
 .post figure {
     text-indent: 0%;
     text-align: center;
-    font-size: large;
+    font-size: medium;
 }
 
-.post a {
-    color: blue;
-    text-decoration: underline;
+.about {
+    font-size: large;
+    text-align: center;
 }
 
 .darkModeButton {
     background-color: gray;
-    
 }
 
 .lightModeButton {

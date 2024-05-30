@@ -30,12 +30,14 @@ proc get_title_and_desc(text: string): seq[string] =
 proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool = false): Option[Post] =
     var post = Post(id: id)
     var post_exists = false
+    var raw_filename: string
 
     # Find the post in `raw/`
     for kind, path in walkDir("raw/"):
         if kind == pcFile:
             let id = parseInt(path.substr(4).split('_')[0])
             if id == post.id:
+                raw_filename = path
                 let text = readFile(path)
                 # The body starts after the '-' line
                 let split = text.split(re("-[\\s]*"), 1)
@@ -65,9 +67,7 @@ proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool 
     # (Otherwise we won't define `published`
     # until the "p" command is used)
     if fileExists("posts/" & post.filename & ".html"):
-        let file = open("posts/" & post.filename & ".html")
-        post.publish_date = some(file.getFileInfo().lastWriteTime.local())
-        file.close()
+        post.publish_date = some(getCreationTime("posts/" & post.filename & ".html").local())
     else:
         post.publish_date = none(DateTime)
 

@@ -83,7 +83,6 @@ proc parse*(self: var MarkdownParser): string =
             of '*':
                 if format_stack.len == 0 or TextFormat.Paragraph notin format_stack and
                    self.peek(-2) == '\n':
-                        echo "ngl i did add that shit"
                         format_stack.add(TextFormat.Paragraph)
                         parsed_text.add("<p>")
                 # Separate so that we can either
@@ -157,9 +156,9 @@ proc parse*(self: var MarkdownParser): string =
                     discard self.next()
                 
                 case format_stack[^1]:
-                    of TextFormat.Heading:  parsed_text.add("<h1>")
-                    of TextFormat.Heading2: parsed_text.add("<h2>")
-                    of TextFormat.Heading3: parsed_text.add("<h3>")
+                    of TextFormat.Heading:  parsed_text.add("<h1># ")
+                    of TextFormat.Heading2: parsed_text.add("<h2>## ")
+                    of TextFormat.Heading3: parsed_text.add("<h3>### ")
                     else: discard
             of '\n':
                 if format_stack.len > 0:

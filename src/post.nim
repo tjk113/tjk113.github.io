@@ -31,6 +31,7 @@ proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool 
     var post = Post(id: id)
     var post_exists = false
     var raw_filename: string
+    let header_split_pattern = re"-\r?\n"
 
     # Find the post in `raw/`
     for kind, path in walkDir("raw/"):
@@ -40,7 +41,7 @@ proc create_post*(id: int, dont_parse_markdown: bool = false, can_be_none: bool 
                 raw_filename = path
                 let text = readFile(path)
                 # The body starts after the '-' line
-                let split = text.split(re("-[\\s]*"), 1)
+                let split = text.split(header_split_pattern, 1)
                 if split.len < 2:
                     raise Defect.newException("Error: Couldn't find the '-' delimiter while parsing \"" & path & "\"")
                 post.body = split[1]

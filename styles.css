@@ -46,6 +46,12 @@ body.darkMode {
     color: black;
 }
 
+/* Really emphasize
+boldness in dark mode */
+.darkMode strong {
+    color: white;
+}
+
 a {
     color: blue;
     text-decoration: underline;
@@ -109,7 +115,7 @@ nav .homeText {
         margin-right: auto;
     }
     @media (min-width: 1154px) {
-        margin-right: 45%;
+        margin-right: 42%;
     }
 }
 

@@ -1,4 +1,3 @@
-import std/enumerate
 import strutils
 import sequtils
 import options
@@ -6,6 +5,7 @@ import times
 import math
 import os
 
+import markdown_parser
 import html_strings
 import post
 
@@ -39,11 +39,16 @@ proc get_modified_post_ids(modified_posts: seq[ModifiedPost]): seq[int] =
         ids.add(post.post.id)
     return ids
 
-proc generate_post_html(post: Post, publish_date: string): string =
-    var temp_publish_date = publish_date
+proc get_post_publish_date_string(post: Post): string =
+    let post_publish_date = post.publish_date.get()
+    let meridiem = post_publish_date.format("tt").toLower()
+    return post_publish_date.format("M/dd/yyyy h:mm") & meridiem
+
+proc generate_post_html(post: Post, now_publish_date: string): string =
+    var publish_date = now_publish_date
     if post.publish_date.isSome:
         let meridiem = post.publish_date.get().format("tt").toLower()
-        temp_publish_date = post.publish_date.get().format("M/dd/yyyy h:mm") & meridiem
+        publish_date = post.publish_date.get().format("M/dd/yyyy h:mm") & meridiem
     # We have to pick and choose what we replace,
     # because otherwise the Github link will break
     var header = HEADER.replace("href=\"styles.css", "href=\"../styles.css")
@@ -52,7 +57,7 @@ proc generate_post_html(post: Post, publish_date: string): string =
                        .replace("href=\"things.html", "href=\"../things.html")
     var post_html = header & """    <div class="post">
     <div class="title">""" & post.title & """</div>
-    <div class="publishDate">""" & temp_publish_date & """</div>
+    <div class="publishDate">""" & publish_date & """</div>
     <div class="body">
 """
     # Proper indentation
@@ -79,9 +84,10 @@ proc generate_thumbnail_html(post: Post, publish_date: string): string =
             </div>
 """
 
-proc generate_homepage_html(publish_date: string): string =
+proc generate_homepage_html(now_publish_date: string): string =
     var homepage_html = HEADER & "    <div class=\"postList\">\n        <div class=\"row\">\n"
-    let num_thumbnails = closest_multiple_to_n(3, get_num_posts())
+    let num_posts = get_num_posts()
+    let num_thumbnails = closest_multiple_to_n(3, num_posts)
     # let post_ids = get_modified_post_ids(modified_posts)
     for i in 1..num_thumbnails:
         # var post: Option[Post]
@@ -91,8 +97,13 @@ proc generate_homepage_html(publish_date: string): string =
         # if i notin post_ids:
         #     post = none(Post)
         # else:
-        let post = create_post(i, true, true)
+
+        # `num_posts + 1 - i` because we want to generate
+        # the thumbnails in reverse chronological order
+        let post = create_post(num_posts + 1 - i, true, true)
         if post.isSome:
+            let publish_date = (if post.get().publish_date.isSome: get_post_publish_date_string(post.get())
+                                else: now_publish_date)
             homepage_html.add(generate_thumbnail_html(post.get(), publish_date))
         # Properly align last row even if
         # the total number of posts is
@@ -132,8 +143,8 @@ proc main() =
     #     write(stdout, "> ")
     #     let input: seq[string] = readLine(stdin).split()
     # Meridiem will be uppercase by default
-    let meridiem = now().format("tt").toLower()
-    let publish_date = now().format("M/dd/yyyy h:mm") & meridiem
+    var meridiem = now().format("tt").toLower()
+    var now_publish_date = now().format("M/dd/yyyy h:mm") & meridiem
     #     case input[0]:
     #         of "h": help()
     #         of "q", "q!":
@@ -190,13 +201,15 @@ proc main() =
     #             echo "Error: unknown command"
 
     for i in 1..get_num_posts():
-        let post_obj = create_post(i).get()
+        var post_obj = create_post(i).get()
+        if post_obj.publish_date.isNone:
+            post_obj.publish_date = some(now().local())
         let file = open("posts/" & post_obj.filename & ".html", fmWrite)
-        file.write(generate_post_html(post_obj, publish_date))
+        file.write(generate_post_html(post_obj, now_publish_date))
         file.close()
 
     var file = open("index.html", fmWrite)
-    file.write(generate_homepage_html(publish_date))
+    file.write(generate_homepage_html(now_publish_date))
     file.close()
 
 when isMainModule:

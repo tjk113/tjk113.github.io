@@ -9,8 +9,8 @@ const HEADER* = """<!DOCTYPE html>
 <body>
     <nav>
         <a class="homeText" href="index.html">bloggolb</a>
-        <a href="https://github.com/tjk113" target="_blank">Github</a>
         <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
         <a href="things.html">Things</a>
     </nav>
 """

@@ -78,28 +78,42 @@ nav {
     justify-content: center;
     display: flex;
     flex-direction: row;
-    @media (max-width: 513px) {
-        font-size: 1.15em;
-    } 
-    @media (min-width: 514px) {
-        font-size: 1.45em;
-    }
-    @media (min-width: 515px) {
-        font-size: 1.65em;
-    }
-    @media (min-width: 516px) {
-        font-size: 1.75em;
-    }
     margin-left: auto;
     margin-right: auto;
     border-radius: 8px;
-    @media (max-width: 1280px) {
+    max-width: 1150px;
+}
+
+@media (max-width: 513px) {
+    nav {
+        font-size: 1.15em;
+    }
+} 
+@media (min-width: 514px) {
+    nav {
+        font-size: 1.45em;
+    }
+}
+@media (min-width: 515px) {
+    nav {
+        font-size: 1.65em;
+    }
+}
+@media (min-width: 516px) {
+    nav {
+        font-size: 1.75em;
+    }
+}
+
+@media (max-width: 1280px) {
+    nav {
         width: 100%;
     }
-    @media (min-width: 1281px) {
+}
+@media (min-width: 1281px) {
+    nav {
         width: 90%;
     }
-    max-width: 1150px;
 }
 
 .darkMode nav {
@@ -107,14 +121,18 @@ nav {
     background-color: rgb(57, 57, 57);
 }
 
-nav .homeText {
-    @media (max-width: 513px) {
+@media (max-width: 513px) {
+    nav .homeText {
         margin-right: 0%;
     }
-    @media (min-width: 514px) {
+}
+@media (min-width: 514px) {
+    nav .homeText {
         margin-right: auto;
     }
-    @media (min-width: 1154px) {
+}
+@media (min-width: 1154px) {
+    nav .homeText {
         margin-right: 42%;
     }
 }
@@ -126,16 +144,21 @@ nav a {
     padding-right: 5px;
     margin-top: 1px;
     margin-bottom: 1px;
-    @media (max-width: 1080px) {
+    border-radius: 8px;
+    transition: font-weight 0.2s;
+}
+
+@media (max-width: 1080px) {
+    nav a {
         margin-left: 2%;
         margin-right: 2%;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    nav a {
         margin-left: 3%;
         margin-right: 3%;
     }
-    border-radius: 8px;
-    transition: font-weight 0.2s;
 }
 
 nav a:hover {
@@ -171,14 +194,19 @@ nav a:hover {
 }
 
 .row .thumbnail {
-    @media (max-width: 1080px) {
+    padding: 2%;
+}
+
+@media (max-width: 1080px) {
+    .row .thumbnail {
         width: 70%;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .row .thumbnail {
         min-width: 22%;
         max-width: 36%;
     }
-    padding: 2%;
 }
 
 /* Center the body in thumbnails */
@@ -202,9 +230,12 @@ on rows without three posts */
     color: white;
     height: 100%;
     width: 100%;
-    /* This helps keep lone thumbnails
-    from getting too wide in a row */
-    @media (min-width: 1081px) {
+}
+
+/* This helps keep lone thumbnails
+from getting too wide in a row */
+@media (min-width: 1081px) {
+    .thumbnail .blank {
         margin-left: 444px;
         overflow-x: hidden;
     }
@@ -221,11 +252,16 @@ on rows without three posts */
     transition: font-weight 0.2s;
     border-radius: 8px;
     text-align: left;
-    @media (max-width: 1080px) {
+}
+
+@media (max-width: 1080px) {
+    .thumbnail .body {
         font-size: medium;
         padding: 10%;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .thumbnail .body {
         font-size: x-large;
         padding: 4%;
     }
@@ -255,36 +291,48 @@ on rows without three posts */
     font-style: italic;
     margin-top: 10px;
     margin-bottom: 10px;
-    @media (max-width: 1080px) {
+}
+
+@media (max-width: 1080px) {
+    .thumbnail .publishDate {
         font-size: medium;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .thumbnail .publishDate {
         font-size: large;
     }
 }
 
-.thumbnail .snippet {
-    @media (max-width: 1080px) {
+@media (max-width: 1080px) {
+    .thumbnail .snippet {
         font-size: small;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .thumbnail .snippet {
         font-size: 0.6em;
     }
 }
 
 .post {
     height: 90%;
-    @media (max-width: 1080px) {
-        width: 100%;
-    }
-    @media (min-width: 1081px) {
-        width: 90%;
-    }
     max-width: 1150px;
     margin-top: 3%;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
+}
+
+@media (max-width: 1080px) {
+    .post {
+        width: 100%;
+    }
+}
+@media (min-width: 1081px) {
+    .post {
+        width: 90%;
+    }
 }
 
 .darkMode .post {
@@ -293,11 +341,16 @@ on rows without three posts */
 
 .post .title {
     font-weight: bold;
-    @media (max-width: 1080px) {
+}
+
+@media (max-width: 1080px) {
+    .post .title {
         font-size: xx-large;
         margin-left: 2%;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .post .title {
         font-size: xxx-large;
         margin-left: 5%;
     }
@@ -306,11 +359,16 @@ on rows without three posts */
 .post .publishDate {
     font-weight: bold;
     font-style: italic;
-    @media (max-width: 1080px) {
+}
+
+@media (max-width: 1080px) {
+    .post .publishDate {
         font-size: x-large;
         margin-left: 2%;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .post .publishDate {
         font-size: x-large;
         margin-left: 5%;
     }
@@ -318,16 +376,25 @@ on rows without three posts */
 
 .post .body {
     font-weight: normal;
-    @media (max-width: 1080px) {
+}
+
+@media (max-width: 1080px) {
+    .post .body {
         margin: 0%;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .post .body {
         margin: 5%;
     }
-    @media (max-width: 1080px) {
+}
+@media (max-width: 1080px) {
+    .post .body {
         font-size: medium;
     }
-    @media (min-width: 1081px) {
+}
+@media (min-width: 1081px) {
+    .post .body {
         font-size: 135%;
     }
 }

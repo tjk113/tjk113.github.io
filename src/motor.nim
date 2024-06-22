@@ -49,12 +49,7 @@ proc generate_post_html(post: Post, now_publish_date: string): string =
     if post.publish_date.isSome:
         let meridiem = post.publish_date.get().format("tt").toLower()
         publish_date = post.publish_date.get().format("M/dd/yyyy h:mm") & meridiem
-    # We have to pick and choose what we replace,
-    # because otherwise the Github link will break
-    var header = HEADER.replace("href=\"styles.css", "href=\"../styles.css")
-                       .replace("href=\"index.html", "href=\"../index.html")
-                       .replace("href=\"about.html", "href=\"../about.html")
-                       .replace("href=\"things.html", "href=\"../things.html")
+    var header = HEADER.replace("href=\"", "href=\"../")
     var post_html = header & """    <div class="post">
     <div class="title">""" & post.title & """</div>
     <div class="publishDate">""" & publish_date & """</div>

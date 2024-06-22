@@ -416,6 +416,7 @@ from getting too wide in a row */
 }
 
 .post .body h1, .post .body h2, .post .body h3 {
+    text-align: left;
     text-indent: 0%;
 }
 

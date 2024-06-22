@@ -1,3 +1,4 @@
+import std/strformat
 import strutils
 
 # World's simplest, most incomplete Markdown parser
@@ -134,17 +135,19 @@ proc parse*(self: var MarkdownParser): string =
                             format_stack.add(TextFormat.LinkText)
                     else:
                         parsed_text.add(c)
-                of ']', '(':
-                    if format_stack.len > 0:
-                        if format_stack[^1] == TextFormat.LinkText:
-                            discard format_stack.pop()
-                            format_stack.add(TextFormat.LinkRef)
-                            continue
-                        elif format_stack[^1] == TextFormat.LinkRef:
-                            continue
+                of ']':
+                    if format_stack.len > 0 and format_stack[^1] == TextFormat.LinkText:
+                        discard format_stack.pop()
+                        format_stack.add(TextFormat.LinkRef)
+                        continue
+                    parsed_text.add(c)
+                of '(':
+                    if format_stack[^1] == TextFormat.LinkRef and self.peek(-2) == ']':
+                        continue
                     parsed_text.add(c)
                 of ')':
-                    if format_stack.len > 0 and format_stack[^1] == TextFormat.LinkRef:
+                    if format_stack.len > 0 and format_stack[^1] == TextFormat.LinkRef and
+                       self.peek() != ')':
                         parsed_text.add("\">" & current_link_text & "</a>")
                         current_link_text = ""
                         discard format_stack.pop()

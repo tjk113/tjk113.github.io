@@ -84,6 +84,11 @@ nav {
     max-width: 1150px;
 }
 
+@media (max-width: 512px) {
+    nav {
+        font-size: 1em;
+    }
+} 
 @media (max-width: 513px) {
     nav {
         font-size: 1.15em;
@@ -148,6 +153,12 @@ nav a {
     transition: font-weight 0.2s;
 }
 
+@media (max-width: 1079px) {
+    nav a {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}
 @media (max-width: 1080px) {
     nav a {
         margin-left: 2%;
@@ -374,13 +385,18 @@ from getting too wide in a row */
     }
 }
 
+.textAlignLeft {
+    text-align: left;
+}
+
 .post .body {
+    text-align: justify;
     font-weight: normal;
 }
 
 @media (max-width: 1080px) {
     .post .body {
-        margin: 0%;
+        margin: 2%;
     }
 }
 @media (min-width: 1081px) {

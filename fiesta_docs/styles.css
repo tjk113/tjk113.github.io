@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+::selection {
+    background-color: black;
+    color: #EBD423;
+}
+
+body {
+    background-color: #EBD423;
+    /* background-color: #080064; */
+    font-family: "Titillium Web";
+    font-size: larger;
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body * {
+    scrollbar-width: none;
+}
+
+h1 {
+    width: fit-content;
+}
+
+h2 {
+    padding: 1%;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.bordered {
+    border: 2px solid black;
+}
+
+.bordered.header {
+    padding: 3px;
+    padding-right: 4px;
+}
+
+.nav-wrapper {
+    position: relative;
+}
+
+.nav-wrapper #gh-link {
+    position: fixed;
+    top: 0%;
+    left: auto;
+    right: 22.48%;
+}
+
+.nav-wrapper h1 {
+    position: fixed;
+    top: 0%;
+    left: 22.48%;
+}
+
+.nav-wrapper h2 {
+    margin-left: 3px;
+}
+
+nav {
+    position: fixed;
+    top: 10%;
+    left: 22.48%;
+    min-width: 12.1em;
+    padding-right: 17px;
+    overflow: scroll;
+}
+
+nav h2, h3, h4 {
+    margin: 3%;
+}
+
+nav h3 {
+    margin-left: 10%;
+}
+
+nav h4 {
+    margin-left: 15%;
+}
+
+nav .drop-down-elems {
+    max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.1s ease-out;
+}
+
+nav a svg {
+    transform: rotate(270deg);
+    transition-property: transform;
+    transition-duration: 0.2s;
+}
+
+nav a.active svg {
+    transform: rotate(0deg);
+}
+
+.content-body {
+    position: fixed;
+    top: 10%;
+    left: max(650px, 35%);
+    right: 22.5%;
+    bottom: 2.69%;
+    overflow: scroll;
+}
+
+.content-body h1, h2, h3, h4 {
+    margin: 1%;
+    margin-bottom: 0%;
+    padding-bottom: 0%;
+}
+
+.content-body p {
+    font-size: larger;
+    margin-left: 2%;
+    margin-top: 0%;
+}
+
+.typename {
+    color: #B62C11;
+}

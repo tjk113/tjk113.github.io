@@ -17,6 +17,7 @@
                 <div class="drop-down-elems">
                     <a href="#str_create"><h4>str_create</h4></a>
                     <a href="#str_create_from"><h4>str_create_from</h4></a>
+                    <a href="#STR"><h4>STR</h4></a>
                     <a href="#str_free"><h4>str_free</h4></a>
                     <a href="#str_set"><h4>str_set</h4></a>
                     <a href="#str_clear"><h4>str_clear</h4></a>
@@ -37,6 +38,7 @@
                 <div class="drop-down-elems">
                     <a href="#dynstr_create"><h4>dynstr_create</h4></a>
                     <a href="#dynstr_create_from"><h4>dynstr_create_from</h4></a>
+                    <a href="#DSTR"><h4>DSTR</h4></a>
                     <a href="#dynstr_free"><h4>dynstr_free</h4></a>
                     <a href="#dynstr_append"><h4>dynstr_append</h4></a>
                     <a href="#dynstr_append_str"><h4>dynstr_append_str</h4></a>
@@ -56,6 +58,7 @@
                 <div class="drop-down-elems">
                     <a href="#str_arr_create"><h4>str_arr_create</h4></a>
                     <a href="#str_arr_create_from"><h4>str_arr_create_from</h4></a>
+                    <a href="#STRARR"><h4>STRARR</h4></a>
                     <a href="#str_arr_free"><h4>str_arr_free</h4></a>
                     <a href="#str_arr_get"><h4>str_arr_get</h4></a>
                     <a href="#str_arr_append"><h4>str_arr_append</h4></a>
@@ -63,91 +66,195 @@
                     <a href="#str_arr_print"><h4>str_arr_print</h4></a>
                 </div>
             </div>
+            <a class="drop-down"><h2>file <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512.02 319.26"><path d="M5.9 48.96 48.97 5.89c7.86-7.86 20.73-7.84 28.56 0l178.48 178.48L434.5 5.89c7.86-7.86 20.74-7.82 28.56 0l43.07 43.07c7.83 7.84 7.83 20.72 0 28.56l-192.41 192.4-.36.37-43.07 43.07c-7.83 7.82-20.7 7.86-28.56 0l-43.07-43.07-.36-.37L5.9 77.52c-7.87-7.86-7.87-20.7 0-28.56z"/></svg></h2></a>
+            <div class="drop-down-elems">
+                <a href="#file_open"><h3>file_open</h3></a>
+                <a href="#file_is_open"><h3>file_is_open</h3></a>
+                <a href="#file_close"><h3>file_close</h3></a>
+                <a href="#file_seek"><h3>file_seek</h3></a>
+                <a href="#file_rewind"><h3>file_rewind</h3></a>
+                <a href="#file_get_length"><h3>file_get_length</h3></a>
+                <a href="#file_read_str"><h3>file_read_str</h3></a>
+                <a href="#file_read_lines"><h3>file_read_lines</h3></a>
+                <a href="#file_read_i8"><h3>file_read_i8</h3></a>
+                <a href="#file_read_u8"><h3>file_read_u8</h3></a>
+                <a href="#file_read_i16"><h3>file_read_i16</h3></a>
+                <a href="#file_read_u16"><h3>file_read_u16</h3></a>
+                <a href="#file_read_i32"><h3>file_read_i32</h3></a>
+                <a href="#file_read_u32"><h3>file_read_u32</h3></a>
+                <a href="#file_read_i64"><h3>file_read_i64</h3></a>
+                <a href="#file_read_u64"><h3>file_read_u64</h3></a>
+                <a href="#file_read_f32"><h3>file_read_f32</h3></a>
+                <a href="#file_read_f64"><h3>file_read_f64</h3></a>
+                <a href="#file_read"><h3>file_read</h3></a>
+                <a href="#file_write_str"><h3>file_write_str</h3></a>
+                <a href="#file_write_i8"><h3>file_write_i8</h3></a>
+                <a href="#file_write_u8"><h3>file_write_u8</h3></a>
+                <a href="#file_write_i16"><h3>file_write_i16</h3></a>
+                <a href="#file_write_u16"><h3>file_write_u16</h3></a>
+                <a href="#file_write_i32"><h3>file_write_i32</h3></a>
+                <a href="#file_write_u32"><h3>file_write_u32</h3></a>
+                <a href="#file_write_i64"><h3>file_write_i64</h3></a>
+                <a href="#file_write_u64"><h3>file_write_u64</h3></a>
+                <a href="#file_write_f32"><h3>file_write_f32</h3></a>
+                <a href="#file_write_f64"><h3>file_write_f64</h3></a>
+                <a href="#file_write"><h3>file_write</h3></a>
+            </div>
+            </div>
             <div style="clear: both; margin-top: 100%;"></div>
         </nav>
     </div>
     <div class="content-body bordered">
-        <h1 >str</h1>
+        <h1>str</h1>
         <h2 id="str_create"><span class="typename">str</span> str_create(<span class="typename">int</span> len)</h2>
-        <p>Create a fixed-length string</p>
+        <p>Create a fixed-length string.</p>
         <h2 id="str_create_from"><span class="typename">str</span> str_create_from(<span class="typename">char*</span> text)</h2>
-        <p>Create a fixed-length string from a null-terminated source</p>
+        <p>Create a fixed-length string from a null-terminated source.</p>
+        <h2 id="STR">Macro: STR(string)</h2>
+        <p>Wrapper around <code>str_create_from</code>.</p>
         <h2 id="str_free"><span class="typename">void</span> str_free(<span class="typename">str</span> string)</h2>
-        <p>Free a string's data</p>
+        <p>Free a string's data.</p>
         <h2 id="str_set"><span class="typename">void</span> str_set(<span class="typename">str*</span> dst, <span class="typename">char*</span> text)</h2>
-        <p>Set a string's data (up to its fixed length) from a null-terminated source</p>
+        <p>Set a string's data (up to its fixed length) from a null-terminated source.</p>
         <h2 id="str_clear"><span class="typename">void</span> str_clear(<span class="typename">str*</span> string)</h2>
-        <p>Clear a string's data</p>
+        <p>Clear a string's data.</p>
         <h2 id="str_split"><span class="typename">str_arr</span> str_split(<span class="typename">str</span> src, <span class="typename">char</span> delimiter)</h2>
-        <p>Split a string at a delimiter, returning an array of the resulting strings</p>
+        <p>Split a string at a delimiter, returning an array of the resulting strings.</p>
         <h2 id="str_compare"><span class="typename">int</span> str_compare(<span class="typename">str*</span> a, <span class="typename">str*</span> b)</h2>
-        <p>Wrapper around strcmp</p>
+        <p>Wrapper around strcmp.</p>
         <h2 id="str_compare_n"><span class="typename">int</span> str_compare_n(<span class="typename">str*</span> a, <span class="typename">str*</span> b, <span class="typename">int</span> n)</h2>
-        <p>Wrapper around strncmp</p>
+        <p>Wrapper around strncmp.</p>
         <h2 id="str_to_lower"><span class="typename">void</span> str_to_lower(<span class="typename">str*</span> string)</h2>
-        <p>Replace all uppercase characters in a string with lowercase characters</p>
+        <p>Replace all uppercase characters in a string with lowercase characters.</p>
         <h2 id="str_to_upper"><span class="typename">void</span> str_to_upper(<span class="typename">str*</span> string)</h2>
-        <p>Replace all lowercase characters in a string with uppercase characters</p>
+        <p>Replace all lowercase characters in a string with uppercase characters.</p>
         <h2 id="str_print"><span class="typename">void</span> str_print(<span class="typename">str</span> string)</h2>
-        <p>Print a string without formatting</p>
+        <p>Print a string without formatting.</p>
         <h2 id="str_printf"><span class="typename">void</span> str_printf(<span class="typename">str</span> format, ...)</h2>
-        <p>Print a string with formatting</p>
+        <p>Print a string with formatting.</p>
         <h2 id="str_println"><span class="typename">void</span> str_println(<span class="typename">str</span> string)</h2>
-        <p>Print a string with a terminating newline</p>
+        <p>Print a string with a terminating newline.</p>
         <h2 id="stoi"><span class="typename">int64_t</span> stoi(<span class="typename">str</span> s)</h2>
-        <p>Convert a string to a 64-bit integer</p>
+        <p>Convert a string to a 64-bit integer.</p>
         <h2 id="stod"><span class="typename">double</span> stod(<span class="typename">str</span> s)</h2>
-        <p>Convert a string to a double</p>
+        <p>Convert a string to a double.</p>
         <h2 id="ctos"><span class="typename">str</span> ctos(<span class="typename">char</span> c)</h2>
-        <p>Convert a character to a string</p>
+        <p>Convert a character to a string.</p>
         <h2 id="stoc"><span class="typename">char</span> stoc(<span class="typename">str</span> s)</h2>
-        <p>Convert a string to a character (a length of 1 is assumed)</p>
-        <h2 id="dynstr_create"><span class="typename">dynstr</span> dynstr_create(void)</h2>
-        <p>Create a dynamic-length string</p>
+        <p>Convert a string to a character (a length of 1 is assumed).</p>
+        <h2 id="dynstr_create"><span class="typename">dynstr</span> dynstr_create()</h2>
+        <p>Create a dynamic-length string.</p>
         <h2 id="dynstr_create_from"><span class="typename">dynstr</span> dynstr_create_from(<span class="typename">char*</span> text)</h2>
-        <p>Create a dynamic-length string from a null-terminated source</p>
+        <p>Create a dynamic-length string from a null-terminated source.</p>
+        <h2 id="DSTR">Macro: DSTR(string)</h2>
+        <p>Wrapper around <code>dynstr_create_from</code>.</p>
         <h2 id="dynstr_free"><span class="typename">void</span> dynstr_free(<span class="typename">dynstr</span> string)</h2>
-        <p>Free a dynamic string's data</p>
+        <p>Free a dynamic string's data.</p>
         <h2 id="dynstr_append"><span class="typename">void</span> dynstr_append(<span class="typename">dynstr*</span> string, <span class="typename">char*</span> text)</h2>
-        <p>Append data to a dynamic string from a null-terminated source</p>
+        <p>Append data to a dynamic string from a null-terminated source.</p>
         <h2 id="dynstr_append_str"><span class="typename">void</span> dynstr_append_str(<span class="typename">dynstr*</span> string, <span class="typename">str</span> text)</h2>
-        <p>Append data to a dynamic string from another dynamic string</p>
+        <p>Append data to a dynamic string from another dynamic string.</p>
         <h2 id="dynstr_append_char"><span class="typename">void</span> dynstr_append_char(<span class="typename">dynstr*</span> string, <span class="typename">char</span> c)</h2>
-        <p>Append a character to a dynamic-length string</p>
+        <p>Append a character to a dynamic-length string.</p>
         <h2 id="dynstr_remove"><span class="typename">void</span> dynstr_remove(<span class="typename">dynstr*</span> string, <span class="typename">int</span> start, <span class="typename">int</span> end)</h2>
-        <p>Remove characters from the range [start, end) in a dynamic string</p>
+        <p>Remove characters from the range [start, end) in a dynamic string.</p>
         <h2 id="dynstr_clear"><span class="typename">void</span> dynstr_clear(<span class="typename">dynstr*</span> string)</h2>
-        <p>Clear a dynamic string's data</p>
+        <p>Clear a dynamic string's data.</p>
         <h2 id="dynstr_compare"><span class="typename">int</span> dynstr_compare(<span class="typename">dynstr*</span> a, <span class="typename">dynstr*</span> b)</h2>
-        <p>Wrapper around strcmp</p>
+        <p>Wrapper around strcmp.</p>
         <h2 id="dynstr_compare_n"><span class="typename">int</span> dynstr_compare_n(<span class="typename">dynstr*</span> a, <span class="typename">dynstr*</span> b, <span class="typename">int</span> n)</h2>
-        <p>Wrapper around strncmp</p>
+        <p>Wrapper around strncmp.</p>
         <h2 id="dynstr_to_lower"><span class="typename">void</span> dynstr_to_lower(<span class="typename">dynstr*</span> string)</h2>
-        <p>Replace all uppercase characters in a dynamic string with lowercase characters</p>
+        <p>Replace all uppercase characters in a dynamic string with lowercase characters.</p>
         <h2 id="dynstr_to_upper"><span class="typename">void</span> dynstr_to_upper(<span class="typename">dynstr*</span> string)</h2>
-        <p>Replace all lowercase characters in a dynamic string with uppercase characters</p>
+        <p>Replace all lowercase characters in a dynamic string with uppercase characters.</p>
         <h2 id="dynstr_print"><span class="typename">void</span> dynstr_print(<span class="typename">dynstr</span> string)</h2>
-        <p>Print a dynamic string without formatting</p>
+        <p>Print a dynamic string without formatting.</p>
         <h2 id="dynstr_printf"><span class="typename">void</span> dynstr_printf(<span class="typename">dynstr</span> format, ...)</h2>
-        <p>Print a dynamic string with formatting</p>
+        <p>Print a dynamic string with formatting.</p>
         <h2 id="dynstr_println"><span class="typename">void</span> dynstr_println(<span class="typename">dynstr</span> string)</h2>
-        <p>Print a dynamic string with a terminating newline</p>
+        <p>Print a dynamic string with a terminating newline.</p>
         <h2 id="dynstr_to_str"><span class="typename">str</span> dynstr_to_str(<span class="typename">dynstr*</span> src)</h2>
-        <p>Convert a dynamic string to a fixed-length string</p>
-        <h2 id="str_arr_create"><span class="typename">str_arr</span> str_arr_create(void)</h2>
-        <p>Create a dynamic array of strings</p>
+        <p>Convert a dynamic string to a fixed-length string.</p>
+        <h2 id="str_arr_create"><span class="typename">str_arr</span> str_arr_create()</h2>
+        <p>Create a dynamic array of strings.</p>
         <h2 id="str_arr_create_from"><span class="typename">str_arr</span> str_arr_create_from(<span class="typename">str*</span> arr)</h2>
-        <p>Create a dynamic array of strings from a null-terminated array</p>
+        <p>Create a dynamic array of strings from a null-terminated array.</p>
+        <h2 id="STRARR">Macro: STRARR(string_array)</h2>
+        <p>Wrapper around <code>str_arr_create_from</code>.</p>
         <h2 id="str_arr_free"><span class="typename">void</span> str_arr_free(<span class="typename">str_arr</span> arr)</h2>
-        <p>Free a string array's data</p>
+        <p>Free a string array's data.</p>
         <h2 id="str_arr_get"><span class="typename">str</span> str_arr_get(<span class="typename">str_arr</span> arr, <span class="typename">int</span> index)</h2>
-        <p>Get a string from an index into a string array</p>
+        <p>Get a string from an index into a string array.</p>
         <h2 id="str_arr_append"><span class="typename">void</span> str_arr_append(<span class="typename">str_arr*</span> arr, <span class="typename">str</span> new_str)</h2>
-        <p>Append a string to a string array</p>
+        <p>Append a string to a string array.</p>
         <h2 id="str_arr_remove"><span class="typename">str</span> str_arr_remove(<span class="typename">str_arr*</span> arr, <span class="typename">int</span> index)</h2>
-        <p>Remove the string at an index in a string array</p>
+        <p>Remove the string at an index in a string array.</p>
         <h2 id="str_arr_print"><span class="typename">void</span> str_arr_print(<span class="typename">str_arr</span> arr)</h2>
-        <p>Print the contents of a string array</p>
+        <p>Print the contents of a string array.</p>
+        <h1>file</h1>
+        <h2 id="file_open"><span class="typename">File</span> file_open(<span class="typename">str</span> filename, <span class="typename">FileAccessModes</span> access_modes)</h2>
+        <p>Open a file with the specified file access mode (modes are selected by bitwise OR'ing FileAccessModes values together; e.g. <code>FileRead | FileWrite</code> selects the "r+" access mode).</p>
+        <h2 id="file_is_open"><span class="typename">bool</span> file_is_open(<span class="typename">File</span> file)</h2>
+        <p>Check whether a file is open.</p>
+        <h2 id="file_close"><span class="typename">void</span> file_close(<span class="typename">File*</span> file)</h2>
+        <p>Close a file.</p>
+        <h2 id="file_seek"><span class="typename">bool</span> file_seek(<span class="typename">File*</span> file, <span class="typename">int64_t</span> offset, <span class="typename">FilePositionOrigin</span> origin)</h2>
+        <p>Seek to an offset in a file.</p>
+        <h2 id="file_rewind"><span class="typename">void</span> file_rewind(<span class="typename">File*</span> file)</h2>
+        <p>Rewind a file back to its start.</p>
+        <h2 id="file_get_length"><span class="typename">int64_t</span> file_get_length(<span class="typename">File*</span> file)</h2>
+        <p>Get a file's length.</p>
+        <h2 id="file_read_str"><span class="typename">str</span> file_read_str(<span class="typename">File*</span> file, <span class="typename">int64_t</span> size)</h2>
+        <p>Read a string (up to <code>size</code> in length) from a file.</p>
+        <h2 id="file_read_lines"><span class="typename">str_arr</span> file_read_lines(<span class="typename">File*</span> file, <span class="typename">int64_t</span> max_line_length)</h2>
+        <p>Read the lines (each line being up to <code>max_line_length</code> in length) from a file.</p>
+        <h2 id="file_read_i8"><span class="typename">ssize_t</span> file_read_i8(<span class="typename">File*</span> file, <span class="typename">int8_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> signed 8-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <h2 id="file_read_u8"><span class="typename">ssize_t</span> file_read_u8(<span class="typename">File*</span> file, <span class="typename">uint8_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> unsigned 8-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <h2 id="file_read_i16"><span class="typename">ssize_t</span> file_read_i16(<span class="typename">File*</span> file, <span class="typename">int16_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> signed 16-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <h2 id="file_read_u16"><span class="typename">ssize_t</span> file_read_u16(<span class="typename">File*</span> file, <span class="typename">uint16_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> unsigned 16-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <h2 id="file_read_i32"><span class="typename">ssize_t</span> file_read_i32(<span class="typename">File*</span> file, <span class="typename">int32_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> signed 32-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <h2 id="file_read_u32"><span class="typename">ssize_t</span> file_read_u32(<span class="typename">File*</span> file, <span class="typename">uint32_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> unsigned 32-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <h2 id="file_read_i64"><span class="typename">ssize_t</span> file_read_i64(<span class="typename">File*</span> file, <span class="typename">int64_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> signed 64-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <h2 id="file_read_u64"><span class="typename">ssize_t</span> file_read_u64(<span class="typename">File*</span> file, <span class="typename">uint64_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> usigned 64-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers..</p>
+        <h2 id="file_read_f32"><span class="typename">ssize_t</span> file_read_f32(<span class="typename">File*</span> file, <span class="typename">float*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> 32-bit floating point numbers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers.</p>
+        <h2 id="file_read_f64"><span class="typename">ssize_t</span> file_read_f64(<span class="typename">File*</span> file, <span class="typename">double*</span> buffer, <span class="typename">size_t</span> count)</h2>
+        <p>Read <code>count</code> 64-bit floating point numbers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers.</p>
+        <h2 id="file_read">Macro: file_read(file,buffer,count)</h2>
+        <p>Read <code>count</code> integers / floating point numbers from a file. The function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers. This is a macro that infers the type of the numbers being read.</p>
+        <h2 id="file_write_str"><span class="typename">size_t</span> file_write_str(<span class="typename">File*</span> file, <span class="typename">str</span> string)</h2>
+        <p>Write a string to a file.</p>
+        <h2 id="file_write_i8"><span class="typename">ssize_t</span> file_write_i8(<span class="typename">File*</span> file, <span class="typename">int8_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> signed 8-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_u8"><span class="typename">ssize_t</span> file_write_u8(<span class="typename">File*</span> file, <span class="typename">uint8_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> unsigned 8-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_i16"><span class="typename">ssize_t</span> file_write_i16(<span class="typename">File*</span> file, <span class="typename">int16_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> signed 16-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_u16"><span class="typename">ssize_t</span> file_write_u16(<span class="typename">File*</span> file, <span class="typename">uint16_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> unsigned 16-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_i32"><span class="typename">ssize_t</span> file_write_i32(<span class="typename">File*</span> file, <span class="typename">int32_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> signed 32-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_u32"><span class="typename">ssize_t</span> file_write_u32(<span class="typename">File*</span> file, <span class="typename">uint32_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> unsigned 32-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_i64"><span class="typename">ssize_t</span> file_write_i64(<span class="typename">File*</span> file, <span class="typename">int64_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> signed 64-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_u64"><span class="typename">ssize_t</span> file_write_u64(<span class="typename">File*</span> file, <span class="typename">uint64_t*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> unsigned 64-bit integers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_f32"><span class="typename">ssize_t</span> file_write_f32(<span class="typename">File*</span> file, <span class="typename">float*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> 32-bit floating point numbers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write_f64"><span class="typename">ssize_t</span> file_write_f64(<span class="typename">File*</span> file, <span class="typename">double*</span> data, <span class="typename">size_t</span> count)</h2>
+        <p>Write <code>count</code> 64-bit floating point numbers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
+        <h2 id="file_write">Macro: file_write(file,data,count)</h2>
+        <p>Write <code>count</code> integers / floating point numbers to a file. The function will return the total number of bytes written if successful, or -1 if there was an error. This is a macro that infers the type of the numbers being written.</p>
     </div>
 </body>
 </html>

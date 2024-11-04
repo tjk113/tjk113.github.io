@@ -64,6 +64,7 @@
                     <a href="#str_arr_append"><h4>str_arr_append</h4></a>
                     <a href="#str_arr_remove"><h4>str_arr_remove</h4></a>
                     <a href="#str_arr_print"><h4>str_arr_print</h4></a>
+                    <a href="#str_arr_to_str"><h4>str_arr_to_str</h4></a>
                 </div>
             </div>
             <a class="drop-down"><h2>file <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512.02 319.26"><path d="M5.9 48.96 48.97 5.89c7.86-7.86 20.73-7.84 28.56 0l178.48 178.48L434.5 5.89c7.86-7.86 20.74-7.82 28.56 0l43.07 43.07c7.83 7.84 7.83 20.72 0 28.56l-192.41 192.4-.36.37-43.07 43.07c-7.83 7.82-20.7 7.86-28.56 0l-43.07-43.07-.36-.37L5.9 77.52c-7.87-7.86-7.87-20.7 0-28.56z"/></svg></h2></a>
@@ -177,7 +178,7 @@
         <h2 id="dynstr_println"><span class="typename">void</span> dynstr_println(<span class="typename">dynstr</span> string)</h2>
         <p>Print a dynamic string with a terminating newline.</p>
         <h2 id="dynstr_to_str"><span class="typename">str</span> dynstr_to_str(<span class="typename">dynstr*</span> src)</h2>
-        <p>Convert a dynamic string to a fixed-length string.</p>
+        <p>Convert a dynamic string to a fixed-length string. The dynamic string's memory will be freed.</p>
         <h2 id="str_arr_create"><span class="typename">str_arr</span> str_arr_create()</h2>
         <p>Create a dynamic array of strings.</p>
         <h2 id="str_arr_create_from"><span class="typename">str_arr</span> str_arr_create_from(<span class="typename">str*</span> arr)</h2>
@@ -194,6 +195,8 @@
         <p>Remove the string at an index in a string array.</p>
         <h2 id="str_arr_print"><span class="typename">void</span> str_arr_print(<span class="typename">str_arr</span> arr)</h2>
         <p>Print the contents of a string array.</p>
+        <h2 id="str_arr_to_str"><span class="typename">str</span> str_arr_to_str(<span class="typename">str_arr*</span> arr, <span class="typename">str*</span> separator)</h2>
+        <p>Join together a string array's elements into one string, with an optional separator between elements. Pass <code>NULL</code> as the separator if one is not desired. The string array's memory will be freed.</p>
         <h1>file</h1>
         <h2 id="file_open"><span class="typename">File</span> file_open(<span class="typename">str</span> filename, <span class="typename">FileAccessModes</span> access_modes)</h2>
         <p>Open a file with the specified file access mode (modes are selected by bitwise OR'ing FileAccessModes values together; e.g. <code>FileRead | FileWrite</code> selects the "r+" access mode).</p>

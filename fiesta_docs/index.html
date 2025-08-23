@@ -15,19 +15,12 @@
             <div class="drop-down-elems">
                 <a class="drop-down"><h3>str <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512.02 319.26"><path d="M5.9 48.96 48.97 5.89c7.86-7.86 20.73-7.84 28.56 0l178.48 178.48L434.5 5.89c7.86-7.86 20.74-7.82 28.56 0l43.07 43.07c7.83 7.84 7.83 20.72 0 28.56l-192.41 192.4-.36.37-43.07 43.07c-7.83 7.82-20.7 7.86-28.56 0l-43.07-43.07-.36-.37L5.9 77.52c-7.87-7.86-7.87-20.7 0-28.56z"/></svg></h3></a>
                 <div class="drop-down-elems">
-                    <a href="#str_create"><h4>str_create</h4></a>
                     <a href="#str_create_from"><h4>str_create_from</h4></a>
                     <a href="#STR"><h4>STR</h4></a>
-                    <a href="#str_free"><h4>str_free</h4></a>
-                    <a href="#str_set"><h4>str_set</h4></a>
-                    <a href="#str_clear"><h4>str_clear</h4></a>
                     <a href="#str_split"><h4>str_split</h4></a>
                     <a href="#str_compare"><h4>str_compare</h4></a>
                     <a href="#str_compare_n"><h4>str_compare_n</h4></a>
-                    <a href="#str_to_lower"><h4>str_to_lower</h4></a>
-                    <a href="#str_to_upper"><h4>str_to_upper</h4></a>
                     <a href="#str_print"><h4>str_print</h4></a>
-                    <a href="#str_printf"><h4>str_printf</h4></a>
                     <a href="#str_println"><h4>str_println</h4></a>
                     <a href="#stoi"><h4>stoi</h4></a>
                     <a href="#stod"><h4>stod</h4></a>
@@ -50,7 +43,6 @@
                     <a href="#dynstr_to_lower"><h4>dynstr_to_lower</h4></a>
                     <a href="#dynstr_to_upper"><h4>dynstr_to_upper</h4></a>
                     <a href="#dynstr_print"><h4>dynstr_print</h4></a>
-                    <a href="#dynstr_printf"><h4>dynstr_printf</h4></a>
                     <a href="#dynstr_println"><h4>dynstr_println</h4></a>
                     <a href="#dynstr_to_str"><h4>dynstr_to_str</h4></a>
                 </div>
@@ -60,6 +52,7 @@
                     <a href="#str_arr_create_from"><h4>str_arr_create_from</h4></a>
                     <a href="#STRARR"><h4>STRARR</h4></a>
                     <a href="#str_arr_free"><h4>str_arr_free</h4></a>
+                    <a href="#str_arr_free_elements"><h4>str_arr_free_elements</h4></a>
                     <a href="#str_arr_get"><h4>str_arr_get</h4></a>
                     <a href="#str_arr_append"><h4>str_arr_append</h4></a>
                     <a href="#str_arr_remove"><h4>str_arr_remove</h4></a>
@@ -77,6 +70,7 @@
                     <a href="#file_seek"><h4>file_seek</h4></a>
                     <a href="#file_rewind"><h4>file_rewind</h4></a>
                     <a href="#file_get_length"><h4>file_get_length</h4></a>
+                    <a href="#file_get_position"><h4>file_get_position</h4></a>
                     <a href="#file_read_str"><h4>file_read_str</h4></a>
                     <a href="#file_read_lines"><h4>file_read_lines</h4></a>
                     <a href="#file_read_i8"><h4>file_read_i8</h4></a>
@@ -104,44 +98,43 @@
                     <a href="#file_write"><h4>file_write</h4></a>
                 </div>
             </div>
+            <a class="drop-down"><h2>optional <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512.02 319.26"><path d="M5.9 48.96 48.97 5.89c7.86-7.86 20.73-7.84 28.56 0l178.48 178.48L434.5 5.89c7.86-7.86 20.74-7.82 28.56 0l43.07 43.07c7.83 7.84 7.83 20.72 0 28.56l-192.41 192.4-.36.37-43.07 43.07c-7.83 7.82-20.7 7.86-28.56 0l-43.07-43.07-.36-.37L5.9 77.52c-7.87-7.86-7.87-20.7 0-28.56z"/></svg></h2></a>
+            <div class="drop-down-elems">
+                <a class="drop-down"><h3>Optional <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512.02 319.26"><path d="M5.9 48.96 48.97 5.89c7.86-7.86 20.73-7.84 28.56 0l178.48 178.48L434.5 5.89c7.86-7.86 20.74-7.82 28.56 0l43.07 43.07c7.83 7.84 7.83 20.72 0 28.56l-192.41 192.4-.36.37-43.07 43.07c-7.83 7.82-20.7 7.86-28.56 0l-43.07-43.07-.36-.37L5.9 77.52c-7.87-7.86-7.87-20.7 0-28.56z"/></svg></h3></a>
+                <div class="drop-down-elems">
+                    <a href="#Optional"><h4>Optional</h4></a>
+                    <a href="#OptionalPtr"><h4>OptionalPtr</h4></a>
+                    <a href="#DEFINE_OPTIONAL"><h4>DEFINE_OPTIONAL</h4></a>
+                    <a href="#None"><h4>None</h4></a>
+                    <a href="#NonePtr"><h4>NonePtr</h4></a>
+                    <a href="#Some"><h4>Some</h4></a>
+                    <a href="#SomePtr"><h4>SomePtr</h4></a>
+                </div>
+            </div>
             <div style="clear: both; margin-top: 100%;"></div>
         </nav>
     </div>
     <div class="content-body bordered">
         <h1>str</h1>
-        <h2 id="str_create"><span class="typename">str</span> str_create(<span class="typename">int</span> len)</h2>
-        <p>Create a fixed-length string.</p>
         <h2 id="str_create_from"><span class="typename">str</span> str_create_from(<span class="typename">char*</span> text)</h2>
         <p>Create a fixed-length string from a null-terminated source.</p>
         <h2 id="STR">Macro: STR(string)</h2>
         <p>Wrapper around <code>str_create_from</code>.</p>
-        <h2 id="str_free"><span class="typename">void</span> str_free(<span class="typename">str</span> string)</h2>
-        <p>Free a string's data.</p>
-        <h2 id="str_set"><span class="typename">void</span> str_set(<span class="typename">str*</span> dst, <span class="typename">char*</span> text)</h2>
-        <p>Set a string's data (up to its fixed length) from a null-terminated source.</p>
-        <h2 id="str_clear"><span class="typename">void</span> str_clear(<span class="typename">str*</span> string)</h2>
-        <p>Clear a string's data.</p>
         <h2 id="str_split"><span class="typename">str_arr</span> str_split(<span class="typename">str</span> src, <span class="typename">char</span> delimiter)</h2>
         <p>Split a string at a delimiter, returning an array of the resulting strings.</p>
         <h2 id="str_compare"><span class="typename">int</span> str_compare(<span class="typename">str*</span> a, <span class="typename">str*</span> b)</h2>
         <p>Wrapper around strcmp.</p>
         <h2 id="str_compare_n"><span class="typename">int</span> str_compare_n(<span class="typename">str*</span> a, <span class="typename">str*</span> b, <span class="typename">int</span> n)</h2>
         <p>Wrapper around strncmp.</p>
-        <h2 id="str_to_lower"><span class="typename">void</span> str_to_lower(<span class="typename">str*</span> string)</h2>
-        <p>Replace all uppercase characters in a string with lowercase characters.</p>
-        <h2 id="str_to_upper"><span class="typename">void</span> str_to_upper(<span class="typename">str*</span> string)</h2>
-        <p>Replace all lowercase characters in a string with uppercase characters.</p>
         <h2 id="str_print"><span class="typename">void</span> str_print(<span class="typename">str</span> string)</h2>
-        <p>Print a string without formatting.</p>
-        <h2 id="str_printf"><span class="typename">void</span> str_printf(<span class="typename">str</span> format, ...)</h2>
-        <p>Print a string with formatting.</p>
+        <p>Print a string.</p>
         <h2 id="str_println"><span class="typename">void</span> str_println(<span class="typename">str</span> string)</h2>
         <p>Print a string with a terminating newline.</p>
         <h2 id="stoi"><span class="typename">int64_t</span> stoi(<span class="typename">str</span> s)</h2>
         <p>Convert a string to a 64-bit integer.</p>
         <h2 id="stod"><span class="typename">double</span> stod(<span class="typename">str</span> s)</h2>
         <p>Convert a string to a double.</p>
-        <h2 id="ctos"><span class="typename">str</span> ctos(<span class="typename">char</span> c)</h2>
+        <h2 id="ctos">Macro: ctos(c)</h2>
         <p>Convert a character to a string.</p>
         <h2 id="stoc"><span class="typename">char</span> stoc(<span class="typename">str</span> s)</h2>
         <p>Convert a string to a character (a length of 1 is assumed).</p>
@@ -172,13 +165,11 @@
         <h2 id="dynstr_to_upper"><span class="typename">void</span> dynstr_to_upper(<span class="typename">dynstr*</span> string)</h2>
         <p>Replace all lowercase characters in a dynamic string with uppercase characters.</p>
         <h2 id="dynstr_print"><span class="typename">void</span> dynstr_print(<span class="typename">dynstr</span> string)</h2>
-        <p>Print a dynamic string without formatting.</p>
-        <h2 id="dynstr_printf"><span class="typename">void</span> dynstr_printf(<span class="typename">dynstr</span> format, ...)</h2>
-        <p>Print a dynamic string with formatting.</p>
+        <p>Print a dynamic string.</p>
         <h2 id="dynstr_println"><span class="typename">void</span> dynstr_println(<span class="typename">dynstr</span> string)</h2>
         <p>Print a dynamic string with a terminating newline.</p>
         <h2 id="dynstr_to_str"><span class="typename">str</span> dynstr_to_str(<span class="typename">dynstr*</span> src)</h2>
-        <p>Convert a dynamic string to a fixed-length string. The dynamic string's memory will be freed.</p>
+        <p>Convert a dynamic string to a fixed-length string. The dynamic string's memory must still be freed.</p>
         <h2 id="str_arr_create"><span class="typename">str_arr</span> str_arr_create()</h2>
         <p>Create a dynamic array of strings.</p>
         <h2 id="str_arr_create_from"><span class="typename">str_arr</span> str_arr_create_from(<span class="typename">str*</span> arr)</h2>
@@ -187,6 +178,8 @@
         <p>Wrapper around <code>str_arr_create_from</code>.</p>
         <h2 id="str_arr_free"><span class="typename">void</span> str_arr_free(<span class="typename">str_arr</span> arr)</h2>
         <p>Free a string array's data.</p>
+        <h2 id="str_arr_free_elements"><span class="typename">void</span> str_arr_free_elements(<span class="typename">str_arr</span> arr)</h2>
+        <p>Free a string array's data, including each element.</p>
         <h2 id="str_arr_get"><span class="typename">str</span> str_arr_get(<span class="typename">str_arr</span> arr, <span class="typename">int</span> index)</h2>
         <p>Get a string from an index into a string array.</p>
         <h2 id="str_arr_append"><span class="typename">void</span> str_arr_append(<span class="typename">str_arr*</span> arr, <span class="typename">str</span> new_str)</h2>
@@ -195,7 +188,7 @@
         <p>Remove the string at an index in a string array.</p>
         <h2 id="str_arr_print"><span class="typename">void</span> str_arr_print(<span class="typename">str_arr</span> arr)</h2>
         <p>Print the contents of a string array.</p>
-        <h2 id="str_arr_to_str"><span class="typename">str</span> str_arr_to_str(<span class="typename">str_arr*</span> arr, <span class="typename">str*</span> separator)</h2>
+        <h2 id="str_arr_to_str"><span class="typename">str</span> str_arr_to_str(<span class="typename">str_arr*</span> arr, <span class="typename">str*</span> separator, <span class="typename">bool</span> free_elements)</h2>
         <p>Join together a string array's elements into one string, with an optional separator between elements. Pass <code>NULL</code> as the separator if one is not desired. The string array's memory will be freed.</p>
         <h1>file</h1>
         <h2 id="file_open"><span class="typename">File</span> file_open(<span class="typename">str</span> filename, <span class="typename">FileAccessModes</span> access_modes)</h2>
@@ -210,6 +203,8 @@
         <p>Rewind a file back to its start.</p>
         <h2 id="file_get_length"><span class="typename">int64_t</span> file_get_length(<span class="typename">File*</span> file)</h2>
         <p>Get a file's length.</p>
+        <h2 id="file_get_position"><span class="typename">int64_t</span> file_get_position(<span class="typename">File</span> file)</h2>
+        <p>Get a file's current position.</p>
         <h2 id="file_read_str"><span class="typename">str</span> file_read_str(<span class="typename">File*</span> file, <span class="typename">int64_t</span> size)</h2>
         <p>Read a string (up to <code>size</code> in length) from a file.</p>
         <h2 id="file_read_lines"><span class="typename">str_arr</span> file_read_lines(<span class="typename">File*</span> file, <span class="typename">int64_t</span> max_line_length)</h2>
@@ -260,6 +255,21 @@
         <p>Write <code>count</code> 64-bit floating point numbers to a file. This function will return the total number of bytes written if successful, or -1 if there was an error.</p>
         <h2 id="file_write">Macro: file_write(file,data,count)</h2>
         <p>Write <code>count</code> integers / floating point numbers to a file. The function will return the total number of bytes written if successful, or -1 if there was an error. This is a macro that infers the type of the numbers being written.</p>
+        <h1>optional</h1>
+        <h2 id="Optional">Macro: Optional(type)</h2>
+        <p>Optional type wrapping a value of <code>type</code> (must be defined using <code>DEFINE_OPTIONAL</code>).</p>
+        <h2 id="OptionalPtr">Macro: OptionalPtr(type)</h2>
+        <p>Optional type wrapping a pointer to <code>type</code> (must be defined using <code>DEFINE_OPTIONAL</code>).</p>
+        <h2 id="DEFINE_OPTIONAL">Macro: DEFINE_OPTIONAL(type)</h2>
+        <p>Define optional value and pointer types for <code>type</code>.</p>
+        <h2 id="None">Macro: None(type)</h2>
+        <p>An optional value of None.</p>
+        <h2 id="NonePtr">Macro: NonePtr(type)</h2>
+        <p>An optional pointer to None.</p>
+        <h2 id="Some">Macro: Some(type,value)</h2>
+        <p>An optional value of <code>type</code>.</p>
+        <h2 id="SomePtr">Macro: SomePtr(type,value)</h2>
+        <p>An optional pointer to <code>type</code>.</p>
     </div>
 </body>
 </html>

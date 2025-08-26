@@ -1,21 +1,20 @@
-import std/strformat
 import strutils
 
 # World's simplest, most incomplete Markdown parser
 # (with just enough HTML in there...)
 # Supported syntax:
-# '**...**'      - Bold
-# '*...*'        - Italic
-# '***...***'    - BoldItalic
-# '# ...'         - Heading
-# '## ...'        - Heading2
-# '### ...'       - Heading3
+# '**...**'          - Bold
+# '*...*'          - Italic
+# '***...***'          - BoldItalic
+# '# ...'        - Heading
+# '## ...'       - Heading2
+# '### ...'      - Heading3
 # '[text](link)' - Hyperlink/Anchor text
+# `...`          - Code snippet
+# ```...```      - Code block
 # TODO: 
 # '1. ...'       - Numbered List
 # '- ...'        - Bulleted List
-# `...`          - Code snippet
-# ```...```      - Code block
 
 type
     MarkdownParser* = object
@@ -35,6 +34,8 @@ type
         Heading3   =  7
         LinkText   =  8
         LinkRef    =  9
+        CodeInline = 10
+        CodeBlock  = 11
 
 const special_chars = ['*', '#', '\\']
 const void_elements = ["<area>", "<base>", "<br>", "<col>", "<command>", "<embed>", "<hr>", "<img>", "<input>", "<keygen>", "<link>", "<meta>", "<param>", "<source>", "<track>", "<wbr>"]
@@ -82,6 +83,49 @@ proc parse*(self: var MarkdownParser): string =
         block outer:
             c = self.next()
             case c:
+                of '`':
+                    var tick_count = 1
+                    while not self.is_at_end() and self.peek() == '`':
+                        inc tick_count
+                        discard self.next()
+
+                    if tick_count == 1:
+                        format_stack.add(TextFormat.CodeInline)
+                        parsed_text.add("<code>")
+                    elif tick_count == 3:
+                        format_stack.add(TextFormat.CodeBlock)
+                        parsed_text.add("<pre>")
+                        # Don't add an extra newline for code blocks
+                        # where there is an initial newline after the
+                        # three backticks
+                        # TODO: Language-specific syntax highlighting
+                        if self.peek() == '\n' or self.peek() == '\r':
+                            discard self.next()
+                            if self.peek() == '\n':
+                                discard self.next()
+                    # Just append all the text here, rather than introducing
+                    # another if statement into every other block
+                    while not self.is_at_end():
+                        # Don't open new code blocks when already in one
+                        if self.peek() == '`':
+                            tick_count = 0
+                            var ticks: seq[char]
+                            while not self.is_at_end() and self.peek() == '`':
+                                inc tick_count
+                                ticks.add(self.next())
+
+                            if tick_count == 1 and format_stack[^1] == TextFormat.CodeInline:
+                                parsed_text.add("</code>")
+                                break
+                            elif tick_count == 3 and format_stack[^1] == TextFormat.CodeBlock:
+                                parsed_text.add("</pre>")
+                                break
+
+                            for tick in ticks:
+                                parsed_text.add(tick)
+                        else:
+                            parsed_text.add(self.next())
+                    discard format_stack.pop()
                 of '*':
                     if format_stack.len == 0 or TextFormat.Paragraph notin format_stack and
                     self.peek(-2) == '\n':
@@ -146,8 +190,7 @@ proc parse*(self: var MarkdownParser): string =
                         continue
                     parsed_text.add(c)
                 of ')':
-                    if format_stack.len > 0 and format_stack[^1] == TextFormat.LinkRef and
-                       self.peek() != ')':
+                    if format_stack.len > 0 and format_stack[^1] == TextFormat.LinkRef:
                         parsed_text.add("\">" & current_link_text & "</a>")
                         current_link_text = ""
                         discard format_stack.pop()

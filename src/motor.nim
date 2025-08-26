@@ -56,8 +56,19 @@ proc generate_post_html(post: Post, now_publish_date: string): string =
     <div class="body">
 """
     # Proper indentation
+    var in_code_block = false
     for line in post.body.splitLines():
-        post_html.add("            " & line & '\n')
+        if line.startsWith("<pre>"):
+            in_code_block = true
+
+        if in_code_block:
+            post_html.add(line & '\n')
+        else:
+            post_html.add("        " & line & '\n')
+
+        if line.startsWith("</pre>"):
+            in_code_block = false
+
     # Gotta make sure that raw HTML
     # no one's reading is pretty :D
     post_html.removeSuffix('\n')

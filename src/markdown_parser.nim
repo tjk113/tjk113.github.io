@@ -3,9 +3,9 @@ import strutils
 # World's simplest, most incomplete Markdown parser
 # (with just enough HTML in there...)
 # Supported syntax:
-# '**...**'          - Bold
-# '*...*'          - Italic
-# '***...***'          - BoldItalic
+# '**...**'      - Bold
+# '*...*'        - Italic
+# '***...***'    - BoldItalic
 # '# ...'        - Heading
 # '## ...'       - Heading2
 # '### ...'      - Heading3

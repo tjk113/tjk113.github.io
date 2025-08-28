@@ -203,7 +203,6 @@ proc parse*(self: var MarkdownParser): string =
                     var i = -2
                     while self.pos + i > 0 and self.peek(i) != '\n':
                         if self.peek(i) notin whitespace:
-                            parsed_text.add("#")
                             break outer
                         dec i
 
@@ -216,9 +215,9 @@ proc parse*(self: var MarkdownParser): string =
                         discard self.next()
 
                     case format_stack[^1]:
-                        of TextFormat.Heading:  parsed_text.add("<h1># ")
-                        of TextFormat.Heading2: parsed_text.add("<h2>## ")
-                        of TextFormat.Heading3: parsed_text.add("<h3>### ")
+                        of TextFormat.Heading:  parsed_text.add("<h1>")
+                        of TextFormat.Heading2: parsed_text.add("<h2>")
+                        of TextFormat.Heading3: parsed_text.add("<h3>")
                         else: discard
                 of '\n':
                     if format_stack.len > 0:

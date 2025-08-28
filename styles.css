@@ -1,6 +1,6 @@
 @font-face {
     font-family: "iA Writer Mono V Regular";
-    src: url("font/iAWriterMonoV.ttf");
+    src: url("fonts/iAWriterMono/iAWriterMonoV.ttf");
     font-style: normal;
     font-weight: 100 1000;
     font-stretch: 0% 200%;
@@ -8,10 +8,22 @@
 
 @font-face {
     font-family: "iA Writer Mono V Italic";
-    src: url("font/iAWriterMonoV-Italic.ttf");
+    src: url("fonts/iAWriterMono/iAWriterMonoV-Italic.ttf");
     font-style: italic;
     font-weight: 100 1000;
     font-stretch: 0% 200%;
+}
+
+@font-face {
+    font-family: "UM Typewriter Regular";
+    src: url("fonts/umtypewriter/UMTypewriter-Regular.otf");
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "UM Typewriter Bold";
+    src: url("fonts/umtypewriter/UMTypewriter-Bold.otf");
+    font-style: normal;
 }
 
 :root {
@@ -328,14 +340,23 @@ from getting too wide in a row */
 }
 
 code, pre {
+    font-family: "UM Typewriter";
     line-height: 1.30em;
     font-size: inherit;
-    padding: 0.75em;
     border-radius: var(--border-radius);
 }
 
 code {
-    padding: 0.15em;
+    padding: 0.2em;
+    padding-bottom: 0em;
+}
+
+h1 code, h2 code, h3 code {
+    padding-top: 0em;
+}
+
+pre {
+    padding: 0.5em;
 }
 
 .darkMode code, .darkMode pre {

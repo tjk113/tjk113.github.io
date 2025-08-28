@@ -31,7 +31,7 @@ fn lookForThing(things: []Thing, thing: Thing) ?Thing {
 }
 </pre><p>In the above code, <code>found_thing</code> may or may not end up initialized by the time it's being returned. Therefore, it makes sense to declare it as optional. Optionals have other use cases, such as in function parameters, but there's no need to enumerate them all here. In any case, my unsatiated palate has left me with a question: might it be possible, through some anachronistic witchcraft, to bring this concept back to C?  </p>
         <p>Well, sort of. Let's explore some of our options (no pun intended).</p>
-        <h2>## The First Approach</h2>
+        <h2>The First Approach</h2>
         <p>What kind of data structure should represent an optional type? Hmm... well, we only have two pieces of relevant data: a value, and whether or not that value is initialized or uninitialized (i.e. something or nothing). That'll be our struct, then:</p>
 <pre>typedef struct {
     int val;
@@ -66,7 +66,7 @@ if (!maybe_int.is_none)
 // I've got nothing!
 // I've got 5!
 </pre><p>While all might look well here, we've actually just run into a few problems. Our first problem is subtle, but is more than capable of grinding the compiler to a halt.</p>
-        <h3>### <code>typedef</code> Ruins the Day</h3>
+        <h3><code>typedef</code> Ruins the Day</h3>
         <p>Our optional types assume that every type in a program only has <em>one name</em>. Because our <code>DEFINE_OPTIONAL</code> macro names its structs using the <em>exact</em> type name we provide, any <code>typedef</code>s of that type cannot be used with the <code>Optional</code> macro:</p>
 <pre>DEFINE_OPTIONAL(int)
 typedef int Integer;
@@ -76,7 +76,7 @@ void some_func() {
     Optional(Integer) maybe_int = Some(Integer, 100);
 }
 </pre><p>While this may not be a problem for individual projects which can regulate their type-naming conventions, it does pose a problem for any <em>default</em> optional types that our hypothetical library may want to define. Additionally, this macro only works for typenames with no spaces. So if you want to define an <code>unsigned long long</code>, you're <em>required</em> to use <code>uint64_t</code> or another <code>typedef</code> for it. Ultimately, the choice would be between having users redefine types using their preferred names, or having them to define every optional type themselves. Neither are particularly convenient.</p>
-        <h3>### Repeating myself, repeating myself</h3>
+        <h3>Repeating myself, repeating myself</h3>
         <p>Our next problem is, again, one of convenience. Notice how we have to provide a type to the <code>Some</code> and <code>None</code> macros?</p>
 <pre>Optional(int) maybe_int = Some(int, 100);
 maybe_int = None(int);
@@ -99,7 +99,7 @@ some_struct = {.field1 = 0, .field2 = "something"};
         ...                                                        \
     )
 </pre><p>This would, however, require users to redefine our macros if they wanted to use them with any of their own types. From a library author's perspective, this is not preferable.</p>
-        <h2>## The Only Approach</h2>
+        <h2>The Only Approach</h2>
         <p>It seems, then, that we're stuck with our clunky syntax. Ruling out the possibility of storing every value behind a pointer, I'm not sure how to craft a more ergonomic approach. For the time being, my utility library (<a target="_blank" href="https://github.com/tjk113/fiesta">fiesta</a>) will be using a design similar to what I've laid out in this article. Perhaps I'll discover some ways to optimize it in the future.</p>
         </div>
     </div>

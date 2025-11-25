@@ -72,6 +72,8 @@
                     <a href="#file_get_length"><h4>file_get_length</h4></a>
                     <a href="#file_get_position"><h4>file_get_position</h4></a>
                     <a href="#file_read_str"><h4>file_read_str</h4></a>
+                    <a href="#file_read_until_delimiter"><h4>file_read_until_delimiter</h4></a>
+                    <a href="#file_read_line"><h4>file_read_line</h4></a>
                     <a href="#file_read_lines"><h4>file_read_lines</h4></a>
                     <a href="#file_read_i8"><h4>file_read_i8</h4></a>
                     <a href="#file_read_u8"><h4>file_read_u8</h4></a>
@@ -122,9 +124,9 @@
         <p>Wrapper around <code>str_create_from</code>.</p>
         <h2 id="str_split"><span class="typename">str_arr</span> str_split(<span class="typename">str</span> src, <span class="typename">char</span> delimiter)</h2>
         <p>Split a string at a delimiter, returning an array of the resulting strings.</p>
-        <h2 id="str_compare"><span class="typename">int</span> str_compare(<span class="typename">str*</span> a, <span class="typename">str*</span> b)</h2>
+        <h2 id="str_compare"><span class="typename">int</span> str_compare(<span class="typename">str</span> a, <span class="typename">str</span> b)</h2>
         <p>Wrapper around strcmp.</p>
-        <h2 id="str_compare_n"><span class="typename">int</span> str_compare_n(<span class="typename">str*</span> a, <span class="typename">str*</span> b, <span class="typename">int</span> n)</h2>
+        <h2 id="str_compare_n"><span class="typename">int</span> str_compare_n(<span class="typename">str</span> a, <span class="typename">str</span> b, <span class="typename">int</span> n)</h2>
         <p>Wrapper around strncmp.</p>
         <h2 id="str_print"><span class="typename">void</span> str_print(<span class="typename">str</span> string)</h2>
         <p>Print a string.</p>
@@ -156,19 +158,19 @@
         <p>Remove characters from the range [start, end) in a dynamic string.</p>
         <h2 id="dynstr_clear"><span class="typename">void</span> dynstr_clear(<span class="typename">dynstr*</span> string)</h2>
         <p>Clear a dynamic string's data.</p>
-        <h2 id="dynstr_compare"><span class="typename">int</span> dynstr_compare(<span class="typename">dynstr*</span> a, <span class="typename">dynstr*</span> b)</h2>
+        <h2 id="dynstr_compare"><span class="typename">int</span> dynstr_compare(<span class="typename">dynstr</span> a, <span class="typename">dynstr</span> b)</h2>
         <p>Wrapper around strcmp.</p>
-        <h2 id="dynstr_compare_n"><span class="typename">int</span> dynstr_compare_n(<span class="typename">dynstr*</span> a, <span class="typename">dynstr*</span> b, <span class="typename">int</span> n)</h2>
+        <h2 id="dynstr_compare_n"><span class="typename">int</span> dynstr_compare_n(<span class="typename">dynstr</span> a, <span class="typename">dynstr</span> b, <span class="typename">int</span> n)</h2>
         <p>Wrapper around strncmp.</p>
-        <h2 id="dynstr_to_lower"><span class="typename">void</span> dynstr_to_lower(<span class="typename">dynstr*</span> string)</h2>
+        <h2 id="dynstr_to_lower"><span class="typename">void</span> dynstr_to_lower(<span class="typename">dynstr</span> string)</h2>
         <p>Replace all uppercase characters in a dynamic string with lowercase characters.</p>
-        <h2 id="dynstr_to_upper"><span class="typename">void</span> dynstr_to_upper(<span class="typename">dynstr*</span> string)</h2>
+        <h2 id="dynstr_to_upper"><span class="typename">void</span> dynstr_to_upper(<span class="typename">dynstr</span> string)</h2>
         <p>Replace all lowercase characters in a dynamic string with uppercase characters.</p>
         <h2 id="dynstr_print"><span class="typename">void</span> dynstr_print(<span class="typename">dynstr</span> string)</h2>
         <p>Print a dynamic string.</p>
         <h2 id="dynstr_println"><span class="typename">void</span> dynstr_println(<span class="typename">dynstr</span> string)</h2>
         <p>Print a dynamic string with a terminating newline.</p>
-        <h2 id="dynstr_to_str"><span class="typename">str</span> dynstr_to_str(<span class="typename">dynstr*</span> src)</h2>
+        <h2 id="dynstr_to_str"><span class="typename">str</span> dynstr_to_str(<span class="typename">dynstr</span> src)</h2>
         <p>Convert a dynamic string to a fixed-length string. The dynamic string's memory must still be freed.</p>
         <h2 id="str_arr_create"><span class="typename">str_arr</span> str_arr_create()</h2>
         <p>Create a dynamic array of strings.</p>
@@ -207,28 +209,32 @@
         <p>Get a file's current position.</p>
         <h2 id="file_read_str"><span class="typename">str</span> file_read_str(<span class="typename">File*</span> file, <span class="typename">int64_t</span> size)</h2>
         <p>Read a string (up to <code>size</code> in length) from a file.</p>
+        <h2 id="file_read_until_delimiter"><span class="typename">str</span> file_read_until_delimiter(<span class="typename">File*</span> file, <span class="typename">char</span> delimiter)</h2>
+        <p>Read a string from a file until <code>delimiter</code> is found (or EOF is reached).</p>
+        <h2 id="file_read_line"><span class="typename">str</span> file_read_line(<span class="typename">File*</span> file)</h2>
+        <p>Read a line from a file.</p>
         <h2 id="file_read_lines"><span class="typename">str_arr</span> file_read_lines(<span class="typename">File*</span> file, <span class="typename">int64_t</span> max_line_length)</h2>
         <p>Read the lines (each line being up to <code>max_line_length</code> in length) from a file.</p>
         <h2 id="file_read_i8"><span class="typename">ssize_t</span> file_read_i8(<span class="typename">File*</span> file, <span class="typename">int8_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> signed 8-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <p>Read <code>count</code> signed 8-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
         <h2 id="file_read_u8"><span class="typename">ssize_t</span> file_read_u8(<span class="typename">File*</span> file, <span class="typename">uint8_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> unsigned 8-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <p>Read <code>count</code> unsigned 8-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
         <h2 id="file_read_i16"><span class="typename">ssize_t</span> file_read_i16(<span class="typename">File*</span> file, <span class="typename">int16_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> signed 16-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <p>Read <code>count</code> signed 16-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
         <h2 id="file_read_u16"><span class="typename">ssize_t</span> file_read_u16(<span class="typename">File*</span> file, <span class="typename">uint16_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> unsigned 16-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <p>Read <code>count</code> unsigned 16-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
         <h2 id="file_read_i32"><span class="typename">ssize_t</span> file_read_i32(<span class="typename">File*</span> file, <span class="typename">int32_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> signed 32-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <p>Read <code>count</code> signed 32-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
         <h2 id="file_read_u32"><span class="typename">ssize_t</span> file_read_u32(<span class="typename">File*</span> file, <span class="typename">uint32_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> unsigned 32-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <p>Read <code>count</code> unsigned 32-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
         <h2 id="file_read_i64"><span class="typename">ssize_t</span> file_read_i64(<span class="typename">File*</span> file, <span class="typename">int64_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> signed 64-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
+        <p>Read <code>count</code> signed 64-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers.</p>
         <h2 id="file_read_u64"><span class="typename">ssize_t</span> file_read_u64(<span class="typename">File*</span> file, <span class="typename">uint64_t*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> usigned 64-bit integers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers..</p>
+        <p>Read <code>count</code> usigned 64-bit integers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read integers..</p>
         <h2 id="file_read_f32"><span class="typename">ssize_t</span> file_read_f32(<span class="typename">File*</span> file, <span class="typename">float*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> 32-bit floating point numbers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers.</p>
+        <p>Read <code>count</code> 32-bit floating point numbers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers.</p>
         <h2 id="file_read_f64"><span class="typename">ssize_t</span> file_read_f64(<span class="typename">File*</span> file, <span class="typename">double*</span> buffer, <span class="typename">size_t</span> count)</h2>
-        <p>Read <code>count</code> 64-bit floating point numbers from a file. This function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers.</p>
+        <p>Read <code>count</code> 64-bit floating point numbers from a file. This function will return the total number of integers read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers.</p>
         <h2 id="file_read">Macro: file_read(file,buffer,count)</h2>
         <p>Read <code>count</code> integers / floating point numbers from a file. The function will return the total number of bytes read if successful, or -1 if there was an error. The caller is expected to allocate enough space in <code>buffer</code> to hold the read numbers. This is a macro that infers the type of the numbers being read.</p>
         <h2 id="file_write_str"><span class="typename">size_t</span> file_write_str(<span class="typename">File*</span> file, <span class="typename">str</span> string)</h2>
